@@ -1,0 +1,54 @@
+// This is your Prisma schema file.
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // URL-ul bazei de date PostgreSQL va fi luat din fișierul .env
+}
+
+// Modele pentru aplicația DEVfLOW
+
+model User {
+  id        Int      @id @default(autoincrement()) // ID-ul utilizatorului, generat automat
+  name      String // Numele utilizatorului
+  email     String   @unique // Email-ul utilizatorului, unic
+  password  String // Parola utilizatorului
+  createdAt DateTime @default(now()) // Data creării contului
+  updatedAt DateTime @updatedAt // Data ultimei actualizări a contului
+  posts     Post[] // Relație cu postările utilizatorului
+}
+
+model Post {
+  id        Int       @id @default(autoincrement()) // ID-ul postării
+  title     String // Titlul postării
+  content   String // Conținutul postării
+  createdAt DateTime  @default(now()) // Data creării postării
+  updatedAt DateTime  @updatedAt // Data ultimei actualizări a postării
+  userId    Int // ID-ul utilizatorului care a creat postarea
+  user      User      @relation(fields: [userId], references: [id]) // Relație cu utilizatorul
+  comments  Comment[] // Comentariile postării
+  likes     Like[] // Like-urile postării
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement()) // ID-ul comentariului
+  text      String // Textul comentariului
+  postId    Int // ID-ul postării la care se adaugă comentariul
+  post      Post     @relation(fields: [postId], references: [id]) // Relație cu postarea
+  createdAt DateTime @default(now()) // Data creării comentariului
+}
+
+model Like {
+  id        Int      @id @default(autoincrement()) // ID-ul like-ului
+  postId    Int // ID-ul postării la care se adaugă like-ul
+  post      Post     @relation(fields: [postId], references: [id]) // Relație cu postarea
+  createdAt DateTime @default(now()) // Data adăugării like-ului
+}
