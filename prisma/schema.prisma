@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // Folosește variabila de mediu DATABASE_URL
+  url      = env("DATABASE_URL")
+}
+
+// --- Modelul Post Actualizat ---
+model Post {
+  id          String   @id @default(cuid())      // ID unic pentru postare (CUID string)
+  description String                           // Descrierea/conținutul postării
+  fileUrl     String?                          // URL-ul imaginii atașate (corespunde lui 'image' din React) - opțional
+  githubLink  String?                          // Link către GitHub (opțional)
+  likeCount   Int      @default(0)             // Numărul de like-uri (corespunde lui 'initialLikes')
+  shareCount  Int      @default(0)             // Numărul de share-uri (corespunde lui 'initialShares')
+  createdAt   DateTime @default(now())          // Data creării
+  updatedAt   DateTime @updatedAt            // Data ultimei actualizări
+
+  // Relație cu User: O postare aparține unui utilizator
+  // Câmpurile 'author' și 'avatar' din React vor fi preluate din obiectul 'User' relaționat
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String                           // Cheie externă către User
+
+  @@index([authorId]) // Index pentru performanță la filtrarea după autor
+}
+
+// --- Modele NextAuth.js (NU MODIFICA dacă nu e necesar) ---
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?                          // Numele utilizatorului (e.g., de la GitHub)
+  email         String?   @unique                // Email-ul (poate fi null dacă nu e public)
+  emailVerified DateTime?
+  image         String?                          // URL-ul avatarului (e.g., de la GitHub, corespunde lui 'avatar' din React)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt // Corectat: eliminat @default(now()) de aici
+
+  // Relații
+  accounts Account[]
+  sessions Session[]
+  posts    Post[]                             // Postările create de utilizator
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
