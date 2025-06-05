@@ -19,6 +19,7 @@ export default function SettingsPage() {
     avatarUrl: "/image/githubprofil.png", 
     bio: "Dezvoltator pasionat explorând noi tehnologii.", // Tradus
     // --- Developer ---
+    
     skills: "React, Next.js, TypeScript, Node.js", // Păstrat (exemple tehnice)
     currentlyHackingOn: "Construiesc funcționalități DEVFLOW!", // Tradus
     availableFor: "Colaborare, Mentorat", // Tradus
@@ -151,8 +152,9 @@ export default function SettingsPage() {
     )},
     { name: 'developer', label: 'Dezvoltator', icon: <FiCode />, content: ( // Tradus
         <div className="space-y-6">
-            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">Profil Dezvoltator</h3> {/* Tradus */}
-            <TextareaField label="Abilități/Limbaje" id="skills" name="skills" value={settings.skills} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="ex: React, Python, AWS..." maxLength={200} showCounter={true} /> {/* Tradus */}
+            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">Profil Dezvoltator</h3> 
+            <TextareaField label="Nivel de experiență" id="experientă" name="experientă" value={settings.experientă} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder=" " maxLength={200} showCounter={true} /> 
+            <TextareaField label="Abilități/Limbaje" id="skills" name="skills" value={settings.skills} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="ex: React, Python, AWS..." maxLength={200} showCounter={true} /> 
             <TextareaField label="Lucrez la" id="currentlyHackingOn" name="currentlyHackingOn" value={settings.currentlyHackingOn} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="Ce proiecte îți ocupă timpul?" maxLength={200} showCounter={true} /> {/* Tradus */}
             <TextareaField label="Disponibil pentru" id="availableFor" name="availableFor" value={settings.availableFor} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="ex: Colaborare, Oportunități de angajare, Mentorat..." maxLength={200} showCounter={true} /> {/* Tradus */}
             <TextareaField label="Învăț în prezent" id="coding" name="coding" value={settings.coding} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="Ce tehnologii noi explorezi?" maxLength={200} showCounter={true} /> {/* Tradus */}

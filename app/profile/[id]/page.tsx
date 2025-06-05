@@ -352,7 +352,31 @@ export default function ProfilePage() {
                 <div className="p-4 bg-white shadow rounded-lg border border-gray-200">
                     {/* ... (JSX User Info neschimbat) ... */}
                     <h2 className="font-semibold text-lg text-gray-800 mb-4">Lacramioara Bordeanu</h2>
-                    <div className="text-sm text-gray-600 space-y-2 border-b border-gray-100 pb-4 mb-4"><p className="flex items-center gap-2"><span className="text-xl">👨‍💻</span> Software Developer</p><p className="flex items-center gap-2"><span className="text-xl">📝</span> Tech Writer @LogRocket</p><p className="mt-2 text-gray-500 italic">Tehnologie și programare 💻</p></div><div className="text-sm text-gray-600 space-y-3 border-b border-gray-100 pb-4 mb-4"><div className="flex items-start gap-2"><span className="text-gray-400 mt-0.5 text-lg">📍</span><div><p className="font-medium text-gray-700">Locatie</p><p>Iași, Romania</p></div></div><div className="flex items-start gap-2"><span className="text-gray-400 mt-0.5 text-lg">📅</span><div><p className="font-medium text-gray-700">Înregistrat</p><p>Feb 11, 2020</p></div></div><div className="flex items-start gap-2"><span className="text-gray-400 mt-0.5 text-lg">🌐</span><div><p className="font-medium text-gray-700">Website</p><a href="https://example.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all">https://example.com</a></div></div><div className="flex items-start gap-2"><span className="text-gray-400 mt-0.5 text-lg">🎓</span><div><p className="font-medium text-gray-700">Educație</p><p>Absolvent Informatică Economică</p></div></div><div className="flex items-start gap-2"><span className="text-gray-400 mt-0.5 text-lg">💼</span><div><p className="font-medium text-gray-700">Muncă</p><p>Software Developer</p></div></div></div><div><h3 className="font-semibold text-base text-gray-800 mb-3">Conectare</h3><div className="flex flex-col gap-3"><a href="mailto:lacramioara@example.com" className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition"><Image src="/image/mail.png" alt="email" width={18} height={18} /><span className="text-sm break-all">lacramioara@gmail.com</span></a><a href={DEFAULT_GITHUB_PROFILE_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition"><Image src="/image/github.png" alt="GitHub" width={18} height={18} /><span className="text-sm">Profil GitHub </span></a><a href="https://www.linkedin.com/in/lacramioara-bordeanu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition"><Image src="/image/linkedin.png" alt="LinkedIn" width={18} height={18} /><span className="text-sm">Profil LinkedIn</span></a></div></div>
+                    <div className="text-sm text-gray-600 space-y-2 border-b border-gray-100 pb-4 mb-4">
+                        <p className="flex items-center gap-2"><span className="text-xl">👨‍💻</span> Software Developer</p>
+                       
+                        <p className="flex items-center gap-2"><span className="text-xl">📝</span> Experiență: Începător/Student</p>
+                        <p className="mt-2 text-gray-500 italic">Tehnologie și programare 💻</p>
+                        
+                        </div>
+                        <div className="text-sm text-gray-600 space-y-3 border-b border-gray-100 pb-4 mb-4">
+                            <div className="flex items-start gap-2"><span className="text-gray-400 mt-0.5 text-lg">📍</span>
+                            <div>
+                                <p className="font-medium text-gray-700">Locatie</p>
+                                <p>Iași, Romania</p></div></div><div className="flex items-start gap-2">
+                                    <span className="text-gray-400 mt-0.5 text-lg">📅</span>
+                                    <div>
+                                        <p className="font-medium text-gray-700">Înregistrat</p>
+                                        <p>Feb 11, 2020</p></div></div><div className="flex items-start gap-2">
+                                            <span className="text-gray-400 mt-0.5 text-lg">🌐</span>
+                                            <div>
+                                                <p className="font-medium text-gray-700">Website</p>
+                                                <a href="https://example.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all">https://example.com</a>
+                                                </div>
+                                                </div>
+                                                <div className="flex items-start gap-2">
+                                                    <span className="text-gray-400 mt-0.5 text-lg">🎓</span>
+                                                    <div><p className="font-medium text-gray-700">Educație</p><p>Absolvent Informatică Economică</p></div></div><div className="flex items-start gap-2"><span className="text-gray-400 mt-0.5 text-lg">💼</span><div><p className="font-medium text-gray-700">Muncă</p><p>Software Developer</p></div></div></div><div><h3 className="font-semibold text-base text-gray-800 mb-3">Conectare</h3><div className="flex flex-col gap-3"><a href="mailto:lacramioara@example.com" className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition"><Image src="/image/mail.png" alt="email" width={18} height={18} /><span className="text-sm break-all">lacramioara@gmail.com</span></a><a href={DEFAULT_GITHUB_PROFILE_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition"><Image src="/image/github.png" alt="GitHub" width={18} height={18} /><span className="text-sm">Profil GitHub </span></a><a href="https://www.linkedin.com/in/lacramioara-bordeanu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition"><Image src="/image/linkedin.png" alt="LinkedIn" width={18} height={18} /><span className="text-sm">Profil LinkedIn</span></a></div></div>
                 </div>
 
                 {/* Create Post Section */}
