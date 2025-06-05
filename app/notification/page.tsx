@@ -1,11 +1,9 @@
-// components/NotificationsPageRedesigned.tsx
+
 'use client';
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion"; // Import AnimatePresence
-import { BellRing, CheckCircle, Info, MessageSquare, X, Trash2, BellOff } from 'lucide-react'; // Import icons
-
-// Date simulate (adăugat timestamp)
+import { motion, AnimatePresence } from "framer-motion"; 
+import { BellRing, CheckCircle, Info, MessageSquare, X, Trash2, BellOff } from 'lucide-react'; 
 const initialNotificationsData = [
   {
     id: 1,
@@ -44,11 +42,8 @@ const initialNotificationsData = [
   },
 ];
 
-// Componenta pentru o singură notificare
 const NotificationItem = ({ notification, onDismiss }) => {
   const { id, title, message, type, timestamp } = notification;
-
-  // Mapează tipul la iconiță și culoare
   const notificationConfig = {
     success: { icon: CheckCircle, color: "text-green-600", bgColor: "bg-green-50", borderColor: "border-green-200" },
     info: { icon: Info, color: "text-blue-600", bgColor: "bg-blue-50", borderColor: "border-blue-200" },
@@ -58,31 +53,22 @@ const NotificationItem = ({ notification, onDismiss }) => {
 
   const config = notificationConfig[type] || notificationConfig.default;
   const IconComponent = config.icon;
-
-  // Formatare timestamp (simplu)
   const formattedTime = new Date(timestamp).toLocaleString('ro-RO', {
-      // dateStyle: 'short', // Sau 'medium', 'long'
-      // timeStyle: 'short',
       hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short'
   });
 
   return (
-    // Cardul notificării cu animație
     <motion.div
-      layout // Permite animații line la reordonare/ștergere
-      initial={{ opacity: 0, y: -20, scale: 0.95 }} // Animație de intrare
+      layout 
+      initial={{ opacity: 0, y: -20, scale: 0.95 }} 
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, x: "-50%", transition: { duration: 0.3 } }} // Animație de ieșire (slide stânga)
+      exit={{ opacity: 0, x: "-50%", transition: { duration: 0.3 } }} 
       transition={{ duration: 0.4, ease: "easeOut" }}
-      // Stil card: padding, fundal, margine, umbră, hover
       className={`relative flex items-start space-x-4 p-4 rounded-lg border shadow-sm hover:shadow-md transition-all ${config.bgColor} ${config.borderColor}`}
     >
-      {/* Iconița */}
       <div className={`flex-shrink-0 mt-1 p-1.5 rounded-full ${config.color} bg-white shadow-sm`}>
         <IconComponent size={18} aria-hidden="true" />
       </div>
-
-      {/* Conținut text */}
       <div className="flex-1 min-w-0">
         <h3 className={`text-sm font-semibold ${config.color}`}>{title}</h3>
         <p className="text-sm text-gray-700 mt-1">{message}</p>
@@ -101,33 +87,25 @@ const NotificationItem = ({ notification, onDismiss }) => {
   );
 };
 
-
-// Componenta principală a paginii
 const NotificationsPageRedesigned = () => {
   const [notifications, setNotifications] = useState(initialNotificationsData);
 
   const handleDismiss = (id) => {
-    // Filtrează notificarea cu ID-ul specificat
     setNotifications((prev) => prev.filter((notif) => notif.id !== id));
   };
 
   const handleMarkAllRead = () => {
-    // Golește array-ul de notificări
     setNotifications([]);
   };
 
   return (
-    // Container principal pagină
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 p-4 md:p-8">
-      {/* Container centrat pentru conținut */}
       <div className="max-w-2xl mx-auto">
-        {/* Antet pagină */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
           <h1 className="text-3xl font-bold text-gray-800 flex items-center">
             <BellRing className="mr-3 text-purple-600" />
             Notificări
           </h1>
-          {/* Buton Marchează toate ca citite (apare doar dacă există notificări) */}
           {notifications.length > 0 && (
             <button
               onClick={handleMarkAllRead}
@@ -138,13 +116,9 @@ const NotificationsPageRedesigned = () => {
             </button>
           )}
         </div>
-
-        {/* Lista de notificări */}
-        <div className="space-y-3"> {/* Spațiere între carduri */}
-          {/* Folosim AnimatePresence pentru a gestiona animațiile de ieșire */}
+        <div className="space-y-3"> 
           <AnimatePresence initial={false}>
             {notifications.length === 0 ? (
-              // Mesaj când nu există notificări
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -155,10 +129,9 @@ const NotificationsPageRedesigned = () => {
                   <p className="mt-1 text-sm text-gray-500">Te vom anunța aici când apar noutăți.</p>
               </motion.div>
             ) : (
-              // Mapare prin notificări
               notifications.map((notif) => (
                 <NotificationItem
-                  key={notif.id} // Key este necesar pentru AnimatePresence
+                  key={notif.id} 
                   notification={notif}
                   onDismiss={handleDismiss}
                 />
@@ -171,4 +144,4 @@ const NotificationsPageRedesigned = () => {
   );
 };
 
-export default NotificationsPageRedesigned; // Schimbă numele exportului dacă dorești
+export default NotificationsPageRedesigned; 

@@ -1,37 +1,29 @@
-// components/LeftMenu.tsx
+
 'use client';
 
 import Link from "next/link";
-import Image from "next/image"; // Folosim Image din next/image
+import Image from "next/image"; 
 
-// Definește tipul pentru props
 interface LeftMenuProps {
-  type: "home" | "profile"; // Tipul paginii poate influența ce se afișează
+  type: "home" | "profile"; 
 }
 
 export default function LeftMenu({ type }: LeftMenuProps) {
   return (
-    // Container principal
     <div className="flex flex-col gap-6">
 
-      {/* Div pentru Logo-ul tău - Am eliminat padding (p-4) */}
-      <div className="bg-white rounded-lg shadow-md border border-gray-100 flex items-center justify-center overflow-hidden"> {/* Adăugat overflow-hidden */}
-        {/* Folosim componenta Image din Next.js pentru logo-ul tău */}
-        {/* Am eliminat width și height fixe, am adăugat w-full și h-auto */}
+      <div className="bg-white rounded-lg shadow-md border border-gray-100 flex items-center justify-center overflow-hidden"> 
+
         <Image
-            src={'/image/logo.png'} // Calea către logo-ul tău
+            src={'/image/logo.png'} 
             alt="DevFlow Logo"
-            width={0} // Necesar pentru layout='responsive' sau 'fill', dar setat la 0
-            height={0}// Necesar pentru layout='responsive' sau 'fill', dar setat la 0
-            sizes="100vw" // Indică browserului că imaginea poate ocupa lățimea viewportului
-            className="w-full h-auto object-contain" // Ocupă lățimea, înălțime automată, păstrează aspect ratio
+            width={0} 
+            height={0}
+            sizes="100vw" 
+            className="w-full h-auto object-contain" 
             priority
         />
       </div>
-      {/* Sfârșit Div Logo */}
-
-
-      {/* Container pentru linkuri - păstrăm structura și imaginile tale */}
       <div className="p-4 bg-white rounded-lg shadow-md text-sm text-gray-500 flex flex-col gap-2 border border-gray-100">
         <Link href={"/app"} className="flex items-center gap-4 p-2 rounded-lg hover:bg-slate-100">
           <Image src={'/image/homes.png'} width={20} height={20} alt="Home Icon" />

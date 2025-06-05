@@ -2,13 +2,10 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import { motion } from "framer-motion";
-// Importăm iconițe
 import {
   FiUser, FiMail, FiMessageSquare, FiSend, FiMapPin, FiPhone, FiClock, FiLoader,
   FiLinkedin, FiGithub
 } from "react-icons/fi";
-// Nu mai avem nevoie de Image dacă nu mai folosim ilustrația
-// import Image from 'next/image';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -28,8 +25,6 @@ export default function ContactPage() {
     e.preventDefault();
     setStatus('loading');
     setErrorMessage('');
-
-    // --- Simulare trimitere (înlocuiește cu logica ta reală de API call) ---
     await new Promise(resolve => setTimeout(resolve, 1500));
     const isSuccess = Math.random() > 0.2;
 
@@ -41,7 +36,6 @@ export default function ContactPage() {
       setStatus('error');
       setErrorMessage("Oops! Something went wrong. Please try again.");
     }
-    // --- Sfârșit Simulare ---
   };
 
   const inputVariants = {
@@ -61,8 +55,6 @@ export default function ContactPage() {
       </motion.h1>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
-        {/* Coloana Stânga: Formularul */}
         <motion.div
           className="bg-white p-8 rounded-xl shadow-lg"
           initial={{ opacity: 0, x: -30 }}
@@ -74,7 +66,6 @@ export default function ContactPage() {
           Ai întrebări sau feedback? Completează formularul de mai jos.
           </p>
           <form onSubmit={handleSubmit} className="space-y-6">
-             {/* Câmp Nume */}
             <motion.div variants={inputVariants} initial="hidden" animate="visible" transition={{ delay: 0.1 }}>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                 Nume
@@ -180,7 +171,7 @@ export default function ContactPage() {
 
         {/* Coloana Dreapta: Doar Info Contact */}
         <motion.div
-          className="space-y-8" // Am păstrat spațierea în caz că adaugi altceva
+          className="space-y-8" 
            initial={{ opacity: 0, x: 30 }}
            animate={{ opacity: 1, x: 0 }}
            transition={{ duration: 0.7, delay: 0.4 }}
@@ -212,8 +203,6 @@ export default function ContactPage() {
                  <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-indigo-600 transition-colors" aria-label="GitHub"><FiGithub size={24} /></a>
               </div>
           </div>
-
-          {/* <<<--- AICI A FOST ȘTERS DIV-UL PENTRU ILUSTRAȚIE --->>> */}
 
         </motion.div>
       </div>

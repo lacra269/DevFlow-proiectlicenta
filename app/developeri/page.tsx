@@ -1,47 +1,43 @@
-// Locație sugerată: app/developers/page.tsx
-// Asigură-te că ai un layout corespunzător (app/layout.tsx)
 
-'use client'; // Necesar pentru interactivitate (filtre)
+'use client'; 
 
 import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 
-// --- Interfața pentru datele unui Developer ---
 interface Developer {
   id: string;
   name: string;
-  headline: string; // Ex: "Full-Stack Developer | React & Node.js Expert"
-  bio: string; // O descriere mai detaliată
-  avatarUrl: string | null; // URL avatar/poză profil
-  skills: string[]; // Lista de abilități principale
-  githubUrl: string; // Link către profilul GitHub
-  linkedinUrl?: string; // Link către profilul LinkedIn (opțional)
-  email: string; // Email de contact
-  location?: string; // Locație (opțional, ex: "Bucharest, Romania" sau "Remote")
-  hourlyRate?: number; // Tarif orar (opțional)
+  headline: string; 
+  bio: string; 
+  avatarUrl: string | null; 
+  skills: string[]; 
+  githubUrl: string; 
+  linkedinUrl?: string; 
+  email: string; 
+  location?: string;
+  hourlyRate?: number; 
 }
 
-// --- Date Exemplu Developeri ---
 const sampleDevelopers: Developer[] = [
   {
     id: 'dev1',
     name: 'Alexandra Munteanu',
     headline: 'Frontend Developer Specialist | React & Next.js',
     bio: 'Dezvoltatoare Frontend pasionată, cu experiență în crearea de interfețe utilizator moderne, rapide și accesibile. Expertiză în ecosistemul React, Next.js și Tailwind CSS. Contribui activ la proiecte open-source.',
-    avatarUrl: 'https://placehold.co/150x150/a78bfa/white?text=AM', // Placeholder avatar
+    avatarUrl: 'https://placehold.co/150x150/a78bfa/white?text=AM',
     skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'JavaScript', 'HTML5', 'CSS3', 'UI/UX Design'],
-    githubUrl: 'https://github.com/alexandra-munteanu-example', // Înlocuiește cu URL real
-    linkedinUrl: 'https://linkedin.com/in/alexandra-munteanu-example', // Înlocuiește cu URL real
+    githubUrl: 'https://github.com/alexandra-munteanu-example', 
+    linkedinUrl: 'https://linkedin.com/in/alexandra-munteanu-example', 
     email: 'alexandra.m.dev@email.com',
     location: 'Cluj-Napoca, Romania',
-    hourlyRate: 40, // Exemplu tarif EUR/oră
+    hourlyRate: 40, 
   },
   {
     id: 'dev2',
     name: 'Bogdan Ionescu',
     headline: 'Full-Stack Engineer | Python (Django/Flask) & Cloud',
     bio: 'Inginer software cu experiență în dezvoltarea de aplicații web complexe end-to-end. Specializat în Python (Django, Flask), baze de date (PostgreSQL) și infrastructură cloud (AWS). Caut proiecte provocatoare.',
-    avatarUrl: 'https://placehold.co/150x150/60a5fa/white?text=BI', // Placeholder avatar
+    avatarUrl: 'https://placehold.co/150x150/60a5fa/white?text=BI', 
     skills: ['Python', 'Django', 'Flask', 'PostgreSQL', 'AWS', 'Docker', 'REST API', 'JavaScript'],
     githubUrl: 'https://github.com/bogdan-ionescu-example',
     email: 'bogdan.ionescu.py@email.com',
@@ -52,7 +48,7 @@ const sampleDevelopers: Developer[] = [
     name: 'Cristian Popa',
     headline: 'Mobile Developer | Android (Kotlin) & iOS (Swift)',
     bio: 'Dezvoltator de aplicații mobile native pentru Android și iOS. Experiență solidă în Kotlin, Java, Swift și SwiftUI. Am publicat aplicații în Google Play și App Store. Focus pe performanță și experiența utilizatorului.',
-    avatarUrl: 'https://placehold.co/150x150/34d399/white?text=CP', // Placeholder avatar
+    avatarUrl: 'https://placehold.co/150x150/34d399/white?text=CP', 
     skills: ['Kotlin', 'Android SDK', 'Java', 'Swift', 'SwiftUI', 'iOS SDK', 'Firebase', 'MVVM', 'MVC'],
     githubUrl: 'https://github.com/cristian-popa-example',
     linkedinUrl: 'https://linkedin.com/in/cristian-popa-example',
@@ -65,25 +61,21 @@ const sampleDevelopers: Developer[] = [
     name: 'Diana Florescu',
     headline: 'Data Scientist & ML Engineer | Python & TensorFlow',
     bio: 'Expertă în analiza datelor și construirea modelelor de machine learning. Experiență cu Python (Pandas, NumPy, Scikit-learn), TensorFlow și Keras. Abilități de vizualizare a datelor și comunicare a rezultatelor.',
-    avatarUrl: 'https://placehold.co/150x150/f472b6/white?text=DF', // Placeholder avatar
+    avatarUrl: 'https://placehold.co/150x150/f472b6/white?text=DF', 
     skills: ['Python', 'Machine Learning', 'TensorFlow', 'Keras', 'Pandas', 'NumPy', 'Scikit-learn', 'SQL', 'Data Visualization'],
     githubUrl: 'https://github.com/diana-florescu-example',
     email: 'diana.f.datasci@email.com',
     location: 'Remote',
   },
-  // --- Adaugă mai mulți developeri aici ---
 ];
-// ------------------------------------------------------------------------
 
-
-// --- Componenta Card Developer ---
 interface DeveloperCardProps {
   developer: Developer;
 }
 
 const DeveloperCard: React.FC<DeveloperCardProps> = ({ developer }) => {
   const { name, headline, bio, avatarUrl, skills, githubUrl, linkedinUrl, email, location, hourlyRate } = developer;
-  const placeholderAvatar = `https://placehold.co/150x150/e5e7eb/4b5563?text=${name.substring(0, 2).toUpperCase()}`; // Placeholder cu inițiale
+  const placeholderAvatar = `https://placehold.co/150x150/e5e7eb/4b5563?text=${name.substring(0, 2).toUpperCase()}`; 
 
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 ease-in-out flex flex-col md:flex-row items-start p-6 gap-6">
@@ -92,7 +84,7 @@ const DeveloperCard: React.FC<DeveloperCardProps> = ({ developer }) => {
         <Image
           src={avatarUrl || placeholderAvatar}
           alt={`Avatar pentru ${name}`}
-          width={100} // Dimensiune mai mică pentru avatar
+          width={100} 
           height={100}
           className="rounded-full border-4 border-indigo-100 object-cover"
           onError={(e) => {
@@ -105,8 +97,6 @@ const DeveloperCard: React.FC<DeveloperCardProps> = ({ developer }) => {
       <div className="flex-grow">
         <h3 className="text-2xl font-bold text-gray-900 mb-1">{name}</h3>
         <p className="text-indigo-600 font-medium mb-3">{headline}</p>
-
-        {/* Locație și Tarif (dacă există) */}
         <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
           {location && (
             <span className="flex items-center gap-1">
@@ -128,8 +118,6 @@ const DeveloperCard: React.FC<DeveloperCardProps> = ({ developer }) => {
         </div>
 
         <p className="text-gray-700 text-sm mb-5">{bio}</p>
-
-        {/* Abilități (Skills) */}
         <div className="mb-5">
           <h4 className="text-sm font-semibold text-gray-800 mb-2">Abilități principale:</h4>
           <div className="flex flex-wrap gap-2">
@@ -185,20 +173,14 @@ const DeveloperCard: React.FC<DeveloperCardProps> = ({ developer }) => {
   );
 };
 
-
-// --- Componenta Principală a Paginii ---
 export default function DevelopersShowcasePage() {
-  // Stare pentru filtrarea după abilități (skill)
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
-
-  // Extrage lista unică de abilități din toți developerii pentru filtru
   const allSkills = useMemo(() => {
     const skillSet = new Set<string>();
     sampleDevelopers.forEach(dev => dev.skills.forEach(skill => skillSet.add(skill)));
     return ['Toate Abilitățile', ...Array.from(skillSet).sort()];
   }, []);
 
-  // Filtrează developerii pe baza abilității selectate
   const filteredDevelopers = useMemo(() => {
     if (!selectedSkill || selectedSkill === 'Toate Abilitățile') {
       return sampleDevelopers;
@@ -209,7 +191,7 @@ export default function DevelopersShowcasePage() {
   return (
     <div className="bg-gradient-to-br from-gray-50 to-indigo-100 min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        {/* Antet */}
+    
         <header className="text-center mb-10 md:mb-14">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-4">
             Găsește Experți IT
@@ -249,7 +231,7 @@ export default function DevelopersShowcasePage() {
           </div>
         </aside>
 
-        {/* Lista de Developeri */}
+     
         <main>
           {filteredDevelopers.length > 0 ? (
             <div className="grid grid-cols-1 gap-8 lg:gap-10">
@@ -258,7 +240,7 @@ export default function DevelopersShowcasePage() {
               ))}
             </div>
           ) : (
-            // Mesaj dacă nu se găsesc developeri
+          
             <div className="text-center py-16 px-4 bg-white rounded-lg shadow border border-gray-200">
                 <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 16.318A4.486 4.486 0 0012.016 15a4.486 4.486 0 00-3.198 1.318M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />

@@ -1,14 +1,14 @@
 import Image from 'next/image';
-import Link from 'next/link'; // Importă Link din Next.js
+import Link from 'next/link'; 
 
-// Definirea datelor provocărilor
+
 const challenges = [
   {
     id: 1,
     title: "Proaspăt Lansat 🚀",
     description: "Provocarea Alibaba Cloud Web Game. Trimite-ți înscrierile devreme!",
     image: "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Ftdu7wtkzz67tqpzexnv1.png",
-    link: "/challenges/1" // Link către pagina dinamică
+    link: "/challenges/1" 
   },
   {
     id: 2,

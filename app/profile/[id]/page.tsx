@@ -1,13 +1,12 @@
-// --- ÎNCEPUT FIȘIER (ex: app/profile/page.tsx sau app/profile/[id]/page.tsx) ---
-'use client'; // Necesar pentru hook-uri
+
+'use client'; 
 
 import React, { useState, useEffect, useCallback } from 'react';
-import LeftMenu from "../../components/LeftMenu"; // TODO: Verifică calea!
+import LeftMenu from "../../components/LeftMenu"; 
 import Image from "next/image";
 import useSWR, { mutate } from 'swr';
 import { useSession } from "next-auth/react";
 
-// --- Tipul de Date Returnat de API ---
 interface ApiPostType {
   id: string;
   description: string;
@@ -15,7 +14,7 @@ interface ApiPostType {
   githubLink?: string | null;
   likeCount: number;
   shareCount: number;
-  createdAt: string; // Poate vrei să formatezi data asta
+  createdAt: string; 
   updatedAt: string;
   author: {
     id: string;
@@ -24,18 +23,12 @@ interface ApiPostType {
   };
 }
 
-// --- Props pentru Componenta Post ---
 interface PostProps {
     post: ApiPostType;
-    onEdit: (post: ApiPostType) => void; // Funcție pasată de la părinte (ProfilePage)
-    onDelete: (id: string) => void;     // Funcție pasată de la părinte (ProfilePage)
+    onEdit: (post: ApiPostType) => void; 
+    onDelete: (id: string) => void;     
 }
-
-// --- Constante Globale (dacă sunt necesare) ---
-const DEFAULT_GITHUB_PROFILE_URL = 'https://github.com/lacra269'; // TODO: Actualizează dacă e necesar
-
-// --- Componente SVG Icons ---
-// (Pot fi mutate într-un fișier separat și importate)
+const DEFAULT_GITHUB_PROFILE_URL = 'https://github.com/lacra269'; 
 const GitHubIcon = () => (
   <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.379.201 2.397.098 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" /></svg>
 );
@@ -46,42 +39,32 @@ const SaveIcon = ({ saved }: { saved: boolean }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 mr-1.5 ${saved ? 'fill-current text-blue-500' : 'text-gray-400 group-hover:text-gray-500'}`} viewBox="0 0 20 20" fill="currentColor"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" /></svg>
 );
 
-// --- Componenta Post (Fără Like, design butoane ajustat) ---
 function Post({ post, onEdit, onDelete }: PostProps) {
-  // State local pentru interacțiuni UI (Save, Meniu)
+
   const [saved, setSaved] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
-  // shareCount nu mai e necesar în state dacă nu îl folosim nicăieri
-  // const [shareCount, setShareCount] = useState(post.shareCount);
-
   const { data: session } = useSession();
-  // Verifică dacă userul curent e autorul postării
-  const isAuthor = session?.user?.id === post.author?.id;
 
-  // --- Handler pentru Share (deschide mailto) ---
+  const isAuthor = session?.user?.id === post.author?.id;
   const handleShare = useCallback(() => {
-    // Poți adăuga logică aici dacă vrei (ex: API call pentru analytics)
+
     const subject = encodeURIComponent(`Check out this post on DEVFLOW by ${post.author?.name || 'User'}!`);
-    const postUrl = typeof window !== 'undefined' ? `${window.location.origin}/post/${post.id}` : ''; // Link către postare specifică (exemplu)
+    const postUrl = typeof window !== 'undefined' ? `${window.location.origin}/post/${post.id}` : ''; 
     const body = encodeURIComponent( `Hey!\n\nCheck out this project:\n\n"${post.description}"\n\nSee it here: ${postUrl}\n\nShared from DEVFLOW` );
     const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
     if (typeof window !== 'undefined') { window.location.href = mailtoLink; }
-  }, [post.id, post.author?.name, post.description]); // Dependințe
+  }, [post.id, post.author?.name, post.description]); 
 
-  // --- Handler pentru meniul More ---
   const handleMoreClick = useCallback((e: React.MouseEvent) => {
-      e.stopPropagation(); // Oprește propagarea ca să nu închidă meniul imediat
-      setMenuVisible(prev => !prev); // Toggle vizibilitate meniu
+      e.stopPropagation(); 
+      setMenuVisible(prev => !prev); 
   }, []);
 
-  // --- Pregătire date pentru afișare ---
   const authorName = post.author?.name ?? 'Unknown User';
-  const authorAvatar = post.author?.image ?? '/image/noAvatar.png'; // TODO: Verifică calea
+  const authorAvatar = post.author?.image ?? '/image/noAvatar.png'; 
   const isValidImageUrl = typeof post.fileUrl === 'string' && post.fileUrl.startsWith('http');
-
-  // --- JSX Return (Verificat Sintactic) ---
-  return ( // Linia 87 (poate diferi ușor la tine)
-    <div className="flex flex-col gap-4 bg-white p-4 rounded-lg shadow border border-gray-200"> {/* Linia 88 */}
+  return ( 
+    <div className="flex flex-col gap-4 bg-white p-4 rounded-lg shadow border border-gray-200"> 
       {/* Antet Post */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -95,7 +78,7 @@ function Post({ post, onEdit, onDelete }: PostProps) {
         {isAuthor && (
             <div className="relative">
                 <Image
-                  src="/image/more.png" alt="more options" width={20} height={20} // TODO: Verifică calea
+                  src="/image/more.png" alt="more options" width={20} height={20} 
                   className="cursor-pointer" onClick={handleMoreClick}
                 />
                 {menuVisible && (
@@ -120,22 +103,21 @@ function Post({ post, onEdit, onDelete }: PostProps) {
 
       {/* Imagine Post */}
       {isValidImageUrl && (
-          <div className="w-full h-auto max-h-96 relative rounded-lg overflow-hidden border border-gray-100 bg-gray-100"> {/* Added bg color */}
+          <div className="w-full h-auto max-h-96 relative rounded-lg overflow-hidden border border-gray-100 bg-gray-100"> 
             <Image
                 src={post.fileUrl!} alt="project image" layout="responsive" width={16} height={9} objectFit="cover"
-                onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} // Ascunde dacă e eroare
+                onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} 
             />
           </div>
       )}
 
-      {/* Acțiuni Post (Design ajustat) */}
       <div className="flex justify-between items-center mt-2 text-sm text-gray-700 border-t border-gray-100 pt-3">
-          {/* Buton GitHub (stânga) */}
+
           {post.githubLink ? (
               <a href={post.githubLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition ease-in-out duration-150">
                   <GitHubIcon />GitHub
               </a>
-          ) : ( <div aria-hidden="true"></div> )} {/* Placeholder */}
+          ) : ( <div aria-hidden="true"></div> )} 
 
           {/* Grup Butoane (dreapta) */}
           <div className="flex items-center gap-3">
@@ -149,15 +131,12 @@ function Post({ post, onEdit, onDelete }: PostProps) {
               </button>
           </div>
       </div>
-
-      {/* Listener pentru click exterior meniu */}
       {menuVisible && <div className="fixed inset-0 z-10" onClick={() => setMenuVisible(false)}></div>}
 
-    </div> // Închidere div principal Post
-  ); // Închidere return Post
-} // Închidere funcție Post
+    </div> 
+  ); 
+}
 
-// --- Funcție Fetcher pentru SWR ---
 const fetcher = async (url: string): Promise<ApiPostType[]> => {
     const response = await fetch(url);
     if (!response.ok) {
@@ -167,8 +146,6 @@ const fetcher = async (url: string): Promise<ApiPostType[]> => {
     }
     return response.json();
 };
-
-// --- Componenta Principală a Paginii (ex: ProfilePage) ---
 export default function ProfilePage() {
     // Starea formularului
     const [submitError, setSubmitError] = useState<string | null>(null);
@@ -182,15 +159,11 @@ export default function ProfilePage() {
     const [pageError, setPageError] = useState<string | null>(null);
 
     const { data: session } = useSession();
-
-    // TODO: Adaptează URL-ul SWR dacă e profilul altcuiva (ex: folosind params.id)
-    const swrKey = '/api/posts'; // Poate fi `/api/posts/user/${params.id}`
+    const swrKey = '/api/posts'; 
     const { data: posts, error: swrError, isLoading, mutate: mutatePosts } = useSWR<ApiPostType[]>(swrKey, fetcher, {
         revalidateOnFocus: true,
         onError: (err) => { setPageError(`Failed to load posts: ${err.message}`); }
     });
-
-    // --- Handlers Formular (majoritatea neschimbate) ---
     const handleImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
@@ -247,7 +220,7 @@ export default function ProfilePage() {
                 const errorData = await response.json().catch(() => ({ message: `HTTP error! status: ${response.status}` }));
                 throw new Error(errorData.message);
             }
-            await mutatePosts(); // Revalidare SWR (await e bun aici)
+            await mutatePosts(); 
             resetForm();
         } catch (err: any) {
             console.error(`ProfilePage: Failed to ${editingPostId ? 'update' : 'submit'} post:`, err);
@@ -265,15 +238,15 @@ export default function ProfilePage() {
         } else { setIncludeGithubButton(false); setSpecificGithubLink(''); }
         document.getElementById('create-post-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         setSubmitError(null); setPageError(null);
-    }, []); // Dependency array gol e ok dacă funcția nu depinde de state extern schimbător
+    }, []); 
 
     const cancelEdit = useCallback(() => { resetForm(); }, [resetForm]);
 
     const handleDeletePost = useCallback(async (postId: string) => {
         if (!confirm("Are you sure you want to delete this post?")) return;
         setPageError(null);
-        const previousPosts = posts; // Păstrează starea curentă pentru rollback
-        mutatePosts(posts?.filter(p => p.id !== postId), false); // Optimistic update
+        const previousPosts = posts; 
+        mutatePosts(posts?.filter(p => p.id !== postId), false); 
 
         try {
             const response = await fetch(`/api/posts/${postId}`, { method: 'DELETE' });
@@ -283,11 +256,10 @@ export default function ProfilePage() {
             }
             console.log("Post deleted successfully via API");
             if (editingPostId === postId) cancelEdit();
-            // Nu mai facem mutate explicit aici, lăsăm SWR să revalideze la următoarea ocazie sau focus
         } catch (err: any) {
             console.error("ProfilePage: Failed to delete post:", err);
             setPageError(err.message || "Could not delete the post.");
-            mutatePosts(previousPosts, false); // Rollback manual la starea anterioară
+            mutatePosts(previousPosts, false); 
         }
     }, [posts, editingPostId, mutatePosts, cancelEdit]);
 
@@ -302,26 +274,17 @@ export default function ProfilePage() {
              return !(descriptionChanged || githubLinkChanged || imageChanged);
         } else { return !newPostDescription.trim() && !newPostImage; }
     }, [isSubmitting, editingPostId, posts, newPostDescription, newPostImage, imagePreview, includeGithubButton, specificGithubLink]);
-
-    // --- Date profil (Exemplu - TODO: Înlocuiește cu date reale/dinamice) ---
-    const profileUserName = 'lacra269'; // Numele profilului vizitat
-    const profileUserAvatar = '/image/githubprofil.png'; // TODO: Verifică calea
+    const profileUserName = 'lacra269';
+    const profileUserAvatar = '/image/githubprofil.png'; 
     const profileUserCover = 'https://images.pexels.com/photos/270404/pexels-photo-270404.jpeg';
-
-    // --- Eroare combinată ---
     const displayError = swrError || pageError;
-
-    // --- JSX Return pentru Pagină ---
     return (
         <div className="flex flex-col lg:flex-row gap-6 bg-gray-100 min-h-screen p-4 md:p-6">
             {/* Left Menu */}
             <div className="hidden xl:block w-[20%] flex-shrink-0"> <LeftMenu type="profile" /> </div>
-
-            {/* Content Principal */}
             <div className="w-full lg:w-[calc(70%-1.5rem)] xl:w-[calc(50%-1.5rem)] flex flex-col gap-6 flex-shrink-0 order-2 lg:order-1">
                 {/* Header Profil */}
                 <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
-                    {/* ... (JSX Header Profil neschimbat) ... */}
                     <div className="relative">
                          <div className="w-full h-48 md:h-64 bg-gray-300 relative"><Image src={profileUserCover} alt="cover photo" layout="fill" objectFit="cover" priority /></div>
                          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2"><Image src={profileUserAvatar} alt="profile picture" width={128} height={128} className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover ring-4 ring-white" onError={(e) => { (e.target as HTMLImageElement).src = '/image/noAvatar.png'; }}/></div>
@@ -346,11 +309,9 @@ export default function ProfilePage() {
                 </div>
             </div>
 
-            {/* Right Column */}
             <div className="w-full lg:w-[30%] xl:w-[30%] flex-shrink-0 flex flex-col gap-6 order-1 lg:order-2">
                 {/* User Info Card */}
                 <div className="p-4 bg-white shadow rounded-lg border border-gray-200">
-                    {/* ... (JSX User Info neschimbat) ... */}
                     <h2 className="font-semibold text-lg text-gray-800 mb-4">Lacramioara Bordeanu</h2>
                     <div className="text-sm text-gray-600 space-y-2 border-b border-gray-100 pb-4 mb-4">
                         <p className="flex items-center gap-2"><span className="text-xl">👨‍💻</span> Software Developer</p>
@@ -378,12 +339,8 @@ export default function ProfilePage() {
                                                     <span className="text-gray-400 mt-0.5 text-lg">🎓</span>
                                                     <div><p className="font-medium text-gray-700">Educație</p><p>Absolvent Informatică Economică</p></div></div><div className="flex items-start gap-2"><span className="text-gray-400 mt-0.5 text-lg">💼</span><div><p className="font-medium text-gray-700">Muncă</p><p>Software Developer</p></div></div></div><div><h3 className="font-semibold text-base text-gray-800 mb-3">Conectare</h3><div className="flex flex-col gap-3"><a href="mailto:lacramioara@example.com" className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition"><Image src="/image/mail.png" alt="email" width={18} height={18} /><span className="text-sm break-all">lacramioara@gmail.com</span></a><a href={DEFAULT_GITHUB_PROFILE_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition"><Image src="/image/github.png" alt="GitHub" width={18} height={18} /><span className="text-sm">Profil GitHub </span></a><a href="https://www.linkedin.com/in/lacramioara-bordeanu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition"><Image src="/image/linkedin.png" alt="LinkedIn" width={18} height={18} /><span className="text-sm">Profil LinkedIn</span></a></div></div>
                 </div>
-
-                {/* Create Post Section */}
-                 {/* TODO: Adaugă condiție: Afișează doar dacă e profilul userului autentificat */}
-                {/* Exemplu: session?.user?.id === userIdFromParams && ( ... ) */}
                 <div id="create-post-section" className="p-4 bg-white shadow rounded-lg border border-gray-200">
-                    {/* ... (JSX Create Post Section neschimbat, dar cu handler și state actualizate) ... */}
+                 
                      <h2 className="font-semibold text-lg text-gray-800 mb-4 pb-3 border-b border-gray-100"> {editingPostId ? 'Modifică Proiectul' : 'Creează proiect'} </h2>
                      {submitError && (
                         <div className="mb-4 text-sm text-red-600 p-3 bg-red-50 rounded-lg border border-red-200 flex justify-between items-center">
@@ -411,8 +368,6 @@ export default function ProfilePage() {
                      </div>
                 </div>
             </div>
-        </div> // Închidere div principal pagină
-    ); // Închidere return ProfilePage
-} // Închidere funcție ProfilePage
-
-// --- SFÂRȘIT FIȘIER ---
+        </div>
+    ); 
+} 

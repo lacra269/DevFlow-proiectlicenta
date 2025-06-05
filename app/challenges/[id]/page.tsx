@@ -1,64 +1,63 @@
 'use client';
 
-import { useParams } from 'next/navigation'; // Import corect pentru App Router
+import { useParams } from 'next/navigation'; 
 import { useState, useEffect } from 'react';
-import Image from 'next/image'; // Import corect pentru componenta Image
-// Importează iconițe
+import Image from 'next/image'; 
 import { Users, Trophy, Link as LinkIcon, ArrowRight, CheckCircle, Loader2 } from 'lucide-react';
 
 // --- API simulată (neschimbată) ---
 const simulateAPI = {
-  getChallenge: async (id: string): Promise<any> => { // Tipăm id ca string
+  getChallenge: async (id: string): Promise<any> => { 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const challenges = [
           {
             id: 1,
-            title: "Proaspăt Lansat 🚀", // Tradus
-            description: "Provocarea Alibaba Cloud Web Game. Trimite-ți înscrierile devreme!", // Tradus
+            title: "Proaspăt Lansat 🚀", 
+            description: "Provocarea Alibaba Cloud Web Game. Trimite-ți înscrierile devreme!", 
             image: "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Ftdu7wtkzz67tqpzexnv1.png",
-            prize: "Discount here", // Tradus
-            details: "Participă la provocare și trimite-ți proiectul devreme pentru o șansă de a câștiga premii grozave. Învață noi abilități în timp ce interacționezi cu o comunitate de dezvoltatori din întreaga lume.", // Tradus
+            prize: "Discount here", 
+            details: "Participă la provocare și trimite-ți proiectul devreme pentru o șansă de a câștiga premii grozave. Învață noi abilități în timp ce interacționezi cu o comunitate de dezvoltatori din întreaga lume.", 
             participants: 50,
             maxParticipants: 100,
-            tags: ["DezvoltareJocuri", "Cloud", "Alibaba Cloud"], // Tradus parțial
+            tags: ["DezvoltareJocuri", "Cloud", "Alibaba Cloud"], 
             resources: [
-              { title: "Documentație Vercel Blob", url: "#" }, // Tradus
-              { title: "Bazele Dezvoltării Jocurilor", url: "#" } // Tradus
+              { title: "Documentație Vercel Blob", url: "#" }, 
+              { title: "Bazele Dezvoltării Jocurilor", url: "#" } 
             ]
           },
           {
             id: 2,
-            title: "Provocare React", // Păstrat (nume propriu)
-            description: "Construiește o mică aplicație folosind React.js.", // Tradus
+            title: "Provocare React", 
+            description: "Construiește o mică aplicație folosind React.js.", 
             image: "https://media2.dev.to/dynamic/image/width=880%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fi7uzu7m51rl9yhs2yryr.png",
-            prize: "Discount curs React", // Tradus
-            details: "Participă la această provocare React.js și construiește o aplicație mică, dar funcțională. Demonstrează-ți abilitățile și câștigă recunoaștere din partea colegilor.", // Tradus
+            prize: "Discount curs React", 
+            details: "Participă la această provocare React.js și construiește o aplicație mică, dar funcțională. Demonstrează-ți abilitățile și câștigă recunoaștere din partea colegilor.", 
             participants: 25,
             maxParticipants: 50,
-            tags: ["React", "Frontend", "JavaScript"], // Păstrat (termeni tehnici)
+            tags: ["React", "Frontend", "JavaScript"], 
             resources: [
-              { title: "Documentație React", url: "https://react.dev/" }, // Tradus
-              { title: "Ghid Tailwind CSS", url: "#" } // Tradus
+              { title: "Documentație React", url: "https://react.dev/" }, 
+              { title: "Ghid Tailwind CSS", url: "#" } 
             ]
           },
           {
             id: 3,
-            title: "Încearcă CSS", // Tradus
-            description: "Stăpânește arta CSS cu această provocare.", // Tradus
+            title: "Încearcă CSS", 
+            description: "Stăpânește arta CSS cu această provocare.", 
             image: "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F9bh07jet1zpfwf7m3ll0.jpg",
-            prize: "Discount cursul complet CSS", // Tradus
-            details: "Provoacă-te să stăpânești CSS participând la această provocare distractivă. Îmbunătățește-ți abilitățile de stilizare și câștigă premii.", // Tradus
+            prize: "Discount cursul complet CSS", 
+            details: "Provoacă-te să stăpânești CSS participând la această provocare distractivă. Îmbunătățește-ți abilitățile de stilizare și câștigă premii.", 
             participants: 75,
             maxParticipants: 100,
-            tags: ["CSS", "Frontend", "Design"], // Păstrat (termeni tehnici)
+            tags: ["CSS", "Frontend", "Design"], 
             resources: [
-              { title: "Referință MDN CSS", url: "#" }, // Tradus
-              { title: "CSS Tricks", url: "#" } // Păstrat (nume site)
+              { title: "Referință MDN CSS", url: "#" }, 
+              { title: "CSS Tricks", url: "#" } 
             ]
           }            
         ];
-        // Comparăm id-ul ca string
+        
         const challenge = challenges.find(ch => ch.id.toString() === id);
         if (challenge) {
           resolve(challenge);
@@ -68,14 +67,14 @@ const simulateAPI = {
       }, 300);
     });
   },
-  joinChallenge: async (id: string): Promise<{ success: boolean; message: string }> => { // Tipăm id și răspunsul
+  joinChallenge: async (id: string): Promise<{ success: boolean; message: string }> => { 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve({ success: true, message: 'Successfully joined the challenge!' });
       }, 300);
     });
   },
-  getLeaderboard: async (id: string): Promise<any[]> => { // Tipăm id și răspunsul
+  getLeaderboard: async (id: string): Promise<any[]> => { 
       return new Promise((resolve) => {
           setTimeout(() => {
               resolve([
@@ -92,7 +91,7 @@ const simulateAPI = {
 // Componenta ChallengeDetails
 const ChallengeDetails = () => {
   const params = useParams();
-  // Extragem ID-ul și ne asigurăm că este tratat ca string
+
   const id = typeof params?.id === 'string' ? params.id : undefined;
 
   const [challenge, setChallenge] = useState<any>(null);
@@ -107,7 +106,7 @@ const ChallengeDetails = () => {
 
   // Fetch challenge details and leaderboard
   useEffect(() => {
-    // Verificăm dacă id este un string valid înainte de a face fetch
+    
     if (!id) {
         setError("Challenge ID lipsește sau este invalid.");
         setLoading(false);
@@ -118,17 +117,17 @@ const ChallengeDetails = () => {
     const fetchChallengeData = async () => {
       setLoading(true);
       setError(null);
-      console.log(`Fetching data for challenge ID: ${id}`); // Log ID
+      console.log(`Fetching data for challenge ID: ${id}`); 
       try {
         const [challengeData, leaderboardData] = await Promise.all([
           simulateAPI.getChallenge(id),
           simulateAPI.getLeaderboard(id)
         ]);
-        console.log("Challenge data received:", challengeData); // Log data
+        console.log("Challenge data received:", challengeData); 
         setChallenge(challengeData);
         setLeaderboard(leaderboardData);
       } catch (err: any) {
-        console.error("Fetch error:", err); // Log eroarea
+        console.error("Fetch error:", err); 
         setError(err.message || 'Nu s-au putut încărca datele challenge-ului.');
       } finally {
         setLoading(false);
@@ -136,15 +135,15 @@ const ChallengeDetails = () => {
     };
 
     fetchChallengeData();
-  }, [id, params?.id]); // Adăugăm params?.id ca dependență explicită
+  }, [id, params?.id]); 
 
-  // Handler pentru înscriere
+  
   const handleJoin = async () => {
     if (!isAuthenticated) {
       alert('Trebuie să fii autentificat pentru a te înscrie.');
       return;
     }
-    // Verificăm din nou ID-ul înainte de a încerca înscrierea
+  
     if (!id || joining || joined) return;
 
     setJoining(true);
@@ -152,11 +151,10 @@ const ChallengeDetails = () => {
       const result = await simulateAPI.joinChallenge(id);
       if (result.success) {
         setJoined(true);
-        setChallenge(prev => prev ? ({ // Verificăm dacă prev nu e null
+        setChallenge(prev => prev ? ({ 
           ...prev,
           participants: (prev.participants || 0) + 1
-        }) : null); // Păstrăm null dacă era null
-        // alert(result.message); // Consideră o notificare mai bună
+        }) : null); 
       } else {
         alert('Înscrierea la challenge a eșuat.');
       }
@@ -210,7 +208,6 @@ const ChallengeDetails = () => {
             />
           </div>
 
-          {/* Titlu și Descriere */}
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">{challenge.title}</h1>
             <p className="mt-3 text-lg text-gray-600">{challenge.description}</p>
@@ -230,7 +227,7 @@ const ChallengeDetails = () => {
           {/* Detalii Challenge */}
           <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Detalii Challenge</h2>
-            {/* Folosește whitespace-pre-wrap pentru a păstra formatarea textului dacă e necesar */}
+        
             <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{challenge.details}</p>
           </div>
 
@@ -258,7 +255,6 @@ const ChallengeDetails = () => {
 
         </div>
 
-        {/* Coloana Laterală (Sidebar) */}
         <div className="lg:col-span-1 space-y-6">
           {/* Card Premiu */}
           <div className="bg-gradient-to-br from-purple-500 to-indigo-600 text-white p-6 rounded-lg shadow-lg">
@@ -293,7 +289,7 @@ const ChallengeDetails = () => {
                   ? 'bg-gray-200 text-gray-500 cursor-wait'
                   : 'bg-purple-600 text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50'
               }`}
-              disabled={joined || joining || !id} // Dezactivat și dacă nu există ID
+              disabled={joined || joining || !id} 
             >
               {joined ? (
                   <> <CheckCircle className="h-5 w-5" /> <span>Înscris!</span> </>
@@ -326,7 +322,7 @@ const ChallengeDetails = () => {
              )}
           </div>
 
-          {/* TODO: Adaugă secțiunea "Similar Challenges" aici dacă dorești */}
+         
 
         </div>
       </div>

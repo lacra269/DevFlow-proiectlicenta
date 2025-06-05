@@ -17,7 +17,7 @@ export const authConfig = {
     async signIn({ user, account }) {
       if (account.provider === "github") {
         try {
-          // Căutăm contul existent în baza de date
+     
           const existingAccount = await prisma.account.findUnique({
             where: {
               providerAccountId_provider: {
@@ -30,7 +30,7 @@ export const authConfig = {
             },
           });
 
-          // Dacă nu găsim contul, îl creăm
+         
           if (!existingAccount) {
             await prisma.user.create({
               data: {

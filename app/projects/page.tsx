@@ -1,27 +1,19 @@
-// IMPORTANT: Acest fișier TREBUIE să fie localizat exact la: app/projects/page.tsx
-// Verifică dacă folosești App Router (folder 'app' la rădăcină).
-// Dacă eroarea 404 persistă, șterge folderul '.next' și repornește serverul.
-
-'use client'; // Necesar pentru hook-uri și event handlers (interactivitate)
+'use client'; 
 
 import React, { useState, useMemo } from 'react';
-import Image from 'next/image'; // Componenta optimizată pentru imagini
-
-// --- Interfața pentru datele unui Proiect ---
-// Am eliminat câmpurile faculty și university, informația va fi în description
+import Image from 'next/image'; 
 interface Project {
   id: string;
   title: string;
-  description: string; // Descrierea va include acum detalii despre contextul academic
+  description: string; 
   category: string;
-  sellerName: string; // Numele vânzătorului
-  sellerEmail: string; // Adresa de email a vânzătorului
-  imageUrl: string | null; // URL-ul imaginii sau null dacă nu există
-  price?: number; // Prețul este opțional
-  tags?: string[]; // Lista de tag-uri/tehnologii este opțională
+  sellerName: string; 
+  sellerEmail: string; 
+  imageUrl: string | null; 
+  price?: number;
+  tags?: string[]; 
 }
 
-// --- Date Exemplu - Actualizate cu Descrieri Integrate ---
 const sampleProjects: Project[] = [
   {
     id: '1',
@@ -134,31 +126,22 @@ const sampleProjects: Project[] = [
     tags: ['JavaScript', 'HTML', 'CSS', 'Chrome API', 'Browser Extension'],
   },
 ];
-// ------------------------------------------------------------------------
 
-
-// --- Componenta Card Proiect ---
-// Aceasta este responsabilă pentru afișarea unui singur proiect.
 interface ProjectCardProps {
-  project: Project; // Primește datele unui proiect ca proprietate (prop)
+  project: Project; 
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
-  // Destructurare proprietăți proiect pentru acces facil
-  // Am eliminat faculty și university de aici
   const { title, description, category, sellerName, sellerEmail, imageUrl, price, tags } = project;
-
-  // Handler pentru click pe butonul de contact - deschide clientul de email
   const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const mailtoLink = `mailto:${sellerEmail}?subject=Interes%20pentru%20proiectul%20"${encodeURIComponent(title)}"&body=Bună%20${encodeURIComponent(sellerName)},%0D%0A%0D%0ASunt%20interesat(ă)%20de%20proiectul%20tău%20"${encodeURIComponent(title)}"%20listat%20pe%20marketplace.%0D%0A%0D%0APoți%20să-mi%20oferi%20mai%20multe%20detalii%3F%0D%0A%0D%0AMulțumesc,`;
     window.location.href = mailtoLink;
   };
 
-  // URL pentru imaginea placeholder default
   const placeholderImg = 'https://placehold.co/600x400/f3f4f6/9ca3af?text=Imagine+Lipsa';
 
   return (
-    // Containerul cardului
+   
     <div className="border border-gray-200 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden bg-white flex flex-col group h-full">
       {/* Secțiunea pentru imagine */}
       <div className="relative h-48 w-full bg-gray-200 overflow-hidden">
@@ -177,21 +160,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         />
       </div>
 
-      {/* Secțiunea pentru conținutul text */}
+     
       <div className="p-5 flex flex-col flex-grow">
-        {/* Categorie */}
+     
         <span className="inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold mb-2 px-3 py-1 rounded-full self-start">
           {category}
         </span>
-        {/* Titlu */}
-        <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">{title}</h3> {/* Increased bottom margin */}
+      
+        <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">{title}</h3> 
 
-        {/* Descriere - Acum include informații despre facultate/universitate */}
+     
         <p className="text-gray-700 text-sm mb-4 flex-grow">
-          {description.length > 150 ? `${description.substring(0, 150)}...` : description} {/* Slightly increased length limit */}
+          {description.length > 150 ? `${description.substring(0, 150)}...` : description} 
         </p>
 
-        {/* Afișare Tag-uri */}
         {tags && tags.length > 0 && (
           <div className="mb-4 flex flex-wrap gap-2">
             {tags.map(tag => (
@@ -202,7 +184,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           </div>
         )}
 
-        {/* Secțiunea inferioară: Vânzător, Preț și Buton Contact */}
+       
         <div className="mt-auto pt-4 border-t border-gray-200">
            {/* Vânzător */}
            <p className="text-sm text-gray-600 mb-2">
@@ -231,27 +213,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     </div>
   );
 };
-
-
-// --- Componenta Principală a Paginii ---
 export default function ProjectsMarketplacePage() {
-  // Stări pentru filtre
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
-  // Calculează lista de categorii unice
   const categories = useMemo(() => {
     const uniqueCategories = new Set(sampleProjects.map(p => p.category));
     return ['Toate Categoriile', ...Array.from(uniqueCategories).sort()];
   }, []);
 
-  // Filtrează proiectele
   const filteredProjects = useMemo(() => {
     return sampleProjects.filter(project => {
       const lowerSearchTerm = searchTerm.toLowerCase();
       const matchesSearch = !searchTerm ||
                             project.title.toLowerCase().includes(lowerSearchTerm) ||
-                            project.description.toLowerCase().includes(lowerSearchTerm) || // Descrierea include acum facultatea/univ
+                            project.description.toLowerCase().includes(lowerSearchTerm) || 
                             project.sellerName.toLowerCase().includes(lowerSearchTerm) ||
                             project.tags?.some(tag => tag.toLowerCase().includes(lowerSearchTerm));
 
@@ -261,16 +236,15 @@ export default function ProjectsMarketplacePage() {
     });
   }, [searchTerm, selectedCategory]);
 
-  // Funcție pentru resetarea filtrelor
   const resetFilters = () => {
     setSearchTerm('');
     setSelectedCategory(null);
   };
 
   return (
-    // Containerul principal al paginii
+   
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 font-sans">
-      {/* Antetul paginii */}
+   
       <header className="text-center mb-8 md:mb-12">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
          Proiecte IT Studențești/Online
@@ -280,10 +254,9 @@ export default function ProjectsMarketplacePage() {
         </p>
       </header>
 
-      {/* --- Secțiunea de Filtrare și Căutare --- */}
       <aside className="mb-8 md:mb-10 p-4 md:p-6 bg-white rounded-lg shadow border border-gray-200">
         <div className="flex flex-col md:flex-row md:items-end gap-4">
-          {/* Câmpul de Căutare */}
+       
           <div className="flex-grow">
             <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
               Caută (titlu, descriere, tag, vânzător)
@@ -297,7 +270,7 @@ export default function ProjectsMarketplacePage() {
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out"
             />
           </div>
-          {/* Dropdown pentru Categorie */}
+       
           <div className="flex-shrink-0 w-full md:w-auto">
             <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
               Filtrează după categorie
@@ -315,7 +288,7 @@ export default function ProjectsMarketplacePage() {
               ))}
             </select>
           </div>
-          {/* Buton de Resetare Filtre */}
+      
           {(searchTerm || selectedCategory) && (
              <button
                 onClick={resetFilters}
@@ -328,7 +301,7 @@ export default function ProjectsMarketplacePage() {
         </div>
       </aside>
 
-      {/* --- Grila cu Proiecte --- */}
+ 
       <main>
         {filteredProjects.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
@@ -337,7 +310,7 @@ export default function ProjectsMarketplacePage() {
             ))}
           </div>
         ) : (
-          // Mesaj "Niciun proiect găsit"
+    
           <div className="text-center py-16 px-4">
             <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2H4a2 2 0 01-2-2zm4-12v4h10V5M5 7v10h14V7H5z" />
@@ -358,8 +331,6 @@ export default function ProjectsMarketplacePage() {
           </div>
         )}
       </main>
-
-      {/* --- Footer Simplu --- */}
       <footer className="text-center mt-12 md:mt-16 py-6 border-t border-gray-200">
           <p className="text-sm text-gray-500">
             &copy; {new Date().getFullYear()} Marketplace Proiecte IT. Creat cu Next.js și Tailwind CSS.

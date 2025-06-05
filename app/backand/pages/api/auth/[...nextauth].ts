@@ -1,4 +1,4 @@
 import NextAuth from "next-auth";
-import { authConfig } from "../../../../../lib/auth"; // Asigură-te că calea este corectă
+import { authConfig } from "../../../../../lib/auth"; 
 
 export default NextAuth(authConfig);

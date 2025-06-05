@@ -25,8 +25,8 @@ export default function Login() {
 
   return (
     <div className="flex justify-center items-center min-h-screen w-full ">
-      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/image/background.jpg')" }}></div> {/* Fundalul */}
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-xl space-y-6 z-10"> {/* Formularul */}
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/image/background.jpg')" }}></div> 
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-xl space-y-6 z-10"> 
         <div className="text-center">
           <Image src="/image/logo.png" alt="Logo" width={150} height={150} className="mx-auto animate__animated animate__fadeIn animate__delay-1s" />
           <h1 className="text-4xl font-extrabold text-gray-900 mt-4 animate__animated animate__fadeIn animate__delay-1s">

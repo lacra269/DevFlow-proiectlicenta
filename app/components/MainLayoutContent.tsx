@@ -14,17 +14,12 @@ export default function MainLayoutContent({ children }: { children: React.ReactN
 
   return (
     <>
-      {/* Navbar pentru landing page */}
       {isLandingPage && <LandingNavbar />}
-
-      {/* Navbar pentru restul paginilor */}
       {showAppNavbar && (
         <div className="container w-full bg-white md:px-8 lg:px-16 xl:px-24 2xl:px-56">
           <AppNavbar />
         </div>
       )}
-
-      {/* Conținutul principal */}
       <div
         className={`
           ${!isLandingPage ? 'bg-slate-100' : ''}

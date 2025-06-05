@@ -17,14 +17,13 @@ export default function SettingsPage() {
     confirmNewPassword: "",
     // --- Profile ---
     avatarUrl: "/image/githubprofil.png", 
-    bio: "Dezvoltator pasionat explorând noi tehnologii.", // Tradus
-    // --- Developer ---
-    experientă: "", // Adăugat pentru a evita eroarea
-
-    skills: "React, Next.js, TypeScript, Node.js", // Păstrat (exemple tehnice)
-    currentlyHackingOn: "Construiesc funcționalități DEVFLOW!", // Tradus
-    availableFor: "Colaborare, Mentorat", // Tradus
-    coding: "Învăț Rust și WebAssembly.", // Tradus
+    bio: "Dezvoltator pasionat explorând noi tehnologii.", 
+ 
+    experientă: "", 
+    skills: "React, Next.js, TypeScript, Node.js", 
+    currentlyHackingOn: "Construiesc funcționalități DEVFLOW!", 
+    availableFor: "Colaborare, Mentorat", 
+    coding: "Învăț Rust și WebAssembly.",
     // --- Notifications ---
     notifications: {
       email: true,
@@ -82,23 +81,23 @@ export default function SettingsPage() {
 
     if (settings.newPassword && settings.newPassword !== settings.confirmNewPassword) {
       setStatus('error');
-      setSaveMessage('Parolele noi nu se potrivesc.'); // Tradus
+      setSaveMessage('Parolele noi nu se potrivesc.'); 
       return;
     }
     if (settings.newPassword && !settings.currentPassword) {
         setStatus('error');
-        setSaveMessage('Te rugăm să introduci parola curentă pentru a seta una nouă.'); // Tradus
+        setSaveMessage('Te rugăm să introduci parola curentă pentru a seta una nouă.'); 
         return;
     }
 
-    console.log("Se salvează setările:", settings); // Tradus
+    console.log("Se salvează setările:", settings); 
     await new Promise(resolve => setTimeout(resolve, 1500)); 
 
     const isSuccess = Math.random() > 0.1; 
 
     if (isSuccess) {
       setStatus('success');
-      setSaveMessage('Setările au fost salvate cu succes!'); // Tradus
+      setSaveMessage('Setările au fost salvate cu succes!'); 
       setSettings(prev => ({
           ...prev,
           currentPassword: "",
@@ -108,77 +107,77 @@ export default function SettingsPage() {
       setTimeout(() => setStatus('idle'), 3000);
     } else {
       setStatus('error');
-      setSaveMessage('Salvarea setărilor a eșuat. Te rugăm să încerci din nou.'); // Tradus
+      setSaveMessage('Salvarea setărilor a eșuat. Te rugăm să încerci din nou.'); 
       setTimeout(() => setStatus('idle'), 5000);
     }
   };
 
   const tabs: { name: TabName; label: string; icon: JSX.Element; content: JSX.Element }[] = [
-    { name: 'account', label: 'Cont', icon: <FiUser />, content: ( // Tradus
+    { name: 'account', label: 'Cont', icon: <FiUser />, content: (
         <div className="space-y-6">
-            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">Informații Cont</h3> {/* Tradus */}
-            <InputField label="Nume utilizator" id="username" name="username" value={settings.username} onChange={handleChange} disabled={status === 'loading'} icon={<FiUser />} /> {/* Tradus */}
-            <InputField label="Email" id="email" name="email" type="email" value={settings.email} onChange={handleChange} disabled={status === 'loading'} icon={<FiMail />} /> {/* Tradus */}
+            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">Informații Cont</h3> 
+            <InputField label="Nume utilizator" id="username" name="username" value={settings.username} onChange={handleChange} disabled={status === 'loading'} icon={<FiUser />} /> 
+            <InputField label="Email" id="email" name="email" type="email" value={settings.email} onChange={handleChange} disabled={status === 'loading'} icon={<FiMail />} /> 
 
-            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2 mt-8">Schimbă Parola</h3> {/* Tradus */}
+            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2 mt-8">Schimbă Parola</h3> 
             <PasswordField
-                label="Parola Curentă" id="currentPassword" name="currentPassword" value={settings.currentPassword} onChange={handleChange} disabled={status === 'loading'} // Tradus
+                label="Parola Curentă" id="currentPassword" name="currentPassword" value={settings.currentPassword} onChange={handleChange} disabled={status === 'loading'} 
                 showPassword={showCurrentPassword} setShowPassword={setShowCurrentPassword}
             />
             <PasswordField
-                label="Parola Nouă" id="newPassword" name="newPassword" value={settings.newPassword} onChange={handleChange} disabled={status === 'loading'} // Tradus
+                label="Parola Nouă" id="newPassword" name="newPassword" value={settings.newPassword} onChange={handleChange} disabled={status === 'loading'} 
                 showPassword={showNewPassword} setShowPassword={setShowNewPassword}
             />
             <PasswordField
-                label="Confirmă Parola Nouă" id="confirmNewPassword" name="confirmNewPassword" value={settings.confirmNewPassword} onChange={handleChange} disabled={status === 'loading'} // Tradus
+                label="Confirmă Parola Nouă" id="confirmNewPassword" name="confirmNewPassword" value={settings.confirmNewPassword} onChange={handleChange} disabled={status === 'loading'} 
                 showPassword={showConfirmPassword} setShowPassword={setShowConfirmPassword}
             />
         </div>
     )},
-    { name: 'profile', label: 'Profil', icon: <FiEdit2 />, content: ( // Tradus
+    { name: 'profile', label: 'Profil', icon: <FiEdit2 />, content: ( 
         <div className="space-y-6">
-            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">Personalizare Profil</h3> {/* Tradus */}
+            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">Personalizare Profil</h3> 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Poză de Profil</label> {/* Tradus */}
+                <label className="block text-sm font-medium text-gray-700 mb-2">Poză de Profil</label> 
                 <div className="flex items-center space-x-4">
                     <img src={settings.avatarUrl || `https://placehold.co/80x80/e5e7eb/4b5563?text=${settings.username.substring(0,2).toUpperCase()}`} alt="Avatar" className="w-20 h-20 rounded-full object-cover bg-gray-200 border" />
                     <label htmlFor="avatar-upload" className="cursor-pointer bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">
-                        <span>Schimbă</span> {/* Tradus */}
+                        <span>Schimbă</span> 
                         <input id="avatar-upload" name="avatar-upload" type="file" className="sr-only" onChange={handleFileChange} accept="image/*" />
                     </label>
                 </div>
             </div>
-            <TextareaField label="Biografie" id="bio" name="bio" value={settings.bio} onChange={handleChange} rows={4} disabled={status === 'loading'} maxLength={300} showCounter={true} /> {/* Tradus */}
+            <TextareaField label="Biografie" id="bio" name="bio" value={settings.bio} onChange={handleChange} rows={4} disabled={status === 'loading'} maxLength={300} showCounter={true} /> 
         </div>
     )},
-    { name: 'developer', label: 'Dezvoltator', icon: <FiCode />, content: ( // Tradus
+    { name: 'developer', label: 'Dezvoltator', icon: <FiCode />, content: ( 
         <div className="space-y-6">
             <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">Profil Dezvoltator</h3> 
             <TextareaField label="Nivel de experiență" id="experientă" name="experientă" value={settings.experientă} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder=" " maxLength={200} showCounter={true} /> 
             <TextareaField label="Abilități/Limbaje" id="skills" name="skills" value={settings.skills} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="ex: React, Python, AWS..." maxLength={200} showCounter={true} /> 
-            <TextareaField label="Lucrez la" id="currentlyHackingOn" name="currentlyHackingOn" value={settings.currentlyHackingOn} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="Ce proiecte îți ocupă timpul?" maxLength={200} showCounter={true} /> {/* Tradus */}
-            <TextareaField label="Disponibil pentru" id="availableFor" name="availableFor" value={settings.availableFor} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="ex: Colaborare, Oportunități de angajare, Mentorat..." maxLength={200} showCounter={true} /> {/* Tradus */}
-            <TextareaField label="Învăț în prezent" id="coding" name="coding" value={settings.coding} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="Ce tehnologii noi explorezi?" maxLength={200} showCounter={true} /> {/* Tradus */}
+            <TextareaField label="Lucrez la" id="currentlyHackingOn" name="currentlyHackingOn" value={settings.currentlyHackingOn} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="Ce proiecte îți ocupă timpul?" maxLength={200} showCounter={true} />
+            <TextareaField label="Disponibil pentru" id="availableFor" name="availableFor" value={settings.availableFor} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="ex: Colaborare, Oportunități de angajare, Mentorat..." maxLength={200} showCounter={true} /> 
+            <TextareaField label="Învăț în prezent" id="coding" name="coding" value={settings.coding} onChange={handleChange} rows={3} disabled={status === 'loading'} placeholder="Ce tehnologii noi explorezi?" maxLength={200} showCounter={true} /> 
         </div>
     )},
-    { name: 'notifications', label: 'Notificări', icon: <FiBell />, content: ( // Tradus
+    { name: 'notifications', label: 'Notificări', icon: <FiBell />, content: ( 
         <div className="space-y-4">
-            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">Preferințe Notificări</h3> {/* Tradus */}
-            <CheckboxField label="Notificări Email" id="emailNotifications" name="emailNotifications" checked={settings.notifications.email} onChange={handleChange} disabled={status === 'loading'} description="Primește actualizări importante prin email."/> {/* Tradus */}
-            <CheckboxField label="Notificări Push" id="pushNotifications" name="pushNotifications" checked={settings.notifications.push} onChange={handleChange} disabled={status === 'loading'} description="Primește alerte în timp real în browser (dacă este suportat)."/> {/* Tradus */}
+            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">Preferințe Notificări</h3> 
+            <CheckboxField label="Notificări Email" id="emailNotifications" name="emailNotifications" checked={settings.notifications.email} onChange={handleChange} disabled={status === 'loading'} description="Primește actualizări importante prin email."/> 
+            <CheckboxField label="Notificări Push" id="pushNotifications" name="pushNotifications" checked={settings.notifications.push} onChange={handleChange} disabled={status === 'loading'} description="Primește alerte în timp real în browser (dacă este suportat)."/> 
         </div>
     )},
-      { name: 'appearance', label: 'Aspect', icon: <FiSettings />, content: ( // Tradus
+      { name: 'appearance', label: 'Aspect', icon: <FiSettings />, content: ( 
         <div className="space-y-4">
-            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">Setări Temă</h3> {/* Tradus */}
-            <SelectField label="Temă" id="theme" name="theme" value={settings.theme} onChange={handleChange} disabled={status === 'loading'} options={[{value: 'light', label: 'Temă Deschisă'}, {value: 'dark', label: 'Temă Întunecată'}]} /> {/* Tradus */}
+            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">Setări Temă</h3> 
+            <SelectField label="Temă" id="theme" name="theme" value={settings.theme} onChange={handleChange} disabled={status === 'loading'} options={[{value: 'light', label: 'Temă Deschisă'}, {value: 'dark', label: 'Temă Întunecată'}]} /> 
         </div>
     )},
   ];
 
   return (
     <main className="p-6 md:p-10 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800">Setări</h1> {/* Tradus */}
+      <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800">Setări</h1> 
 
       <div className="max-w-5xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow-lg">
         <div className="mb-6 border-b border-gray-200">
@@ -243,7 +242,7 @@ export default function SettingsPage() {
                   ) : (
                       <FiSave className="-ml-1 mr-2 h-5 w-5 text-white" />
                   )}
-                  {status === 'loading' ? 'Se salvează...' : 'Salvează Modificările'} {/* Tradus */}
+                  {status === 'loading' ? 'Se salvează...' : 'Salvează Modificările'} 
                 </button>
               </div>
             </div>
@@ -252,8 +251,6 @@ export default function SettingsPage() {
     </main>
   );
 }
-
-// --- Componente Helper pentru Form Fields ---
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
@@ -295,7 +292,7 @@ const PasswordField = ({ label, id, showPassword, setShowPassword, ...props }: P
                     type="button"
                     onClick={() => setShowPassword(prev => !prev)}
                     className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
-                    aria-label={showPassword ? "Ascunde parola" : "Arată parola"} // Tradus
+                    aria-label={showPassword ? "Ascunde parola" : "Arată parola"} 
                 >
                     {showPassword ? <FiEyeOff /> : <FiEye />}
                 </button>

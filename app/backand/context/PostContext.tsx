@@ -14,12 +14,12 @@ export type Post = {
   id: number;
   author: Author;
   description: string;
-  // Eliminăm localFileUrl și localFileType de aici
-  fileObject?: File | null; // Stocăm obiectul File direct
+  
+  fileObject?: File | null; 
   createdAt: Date;
 };
 
-// Tipul pentru context, addPost primește datele *fără* id și createdAt
+
 type PostContextType = {
   posts: Post[];
   addPost: (postData: Omit<Post, 'id' | 'createdAt'>) => void;
@@ -34,22 +34,19 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
 
   // Funcția addPost actualizată
   const addPost = (postData: Omit<Post, 'id' | 'createdAt'>) => {
-    // Creează obiectul complet Post, generând id și createdAt
+    
     const newPost: Post = {
       ...postData,
-      id: Date.now(), // Generează un ID unic simplu bazat pe timestamp
-      createdAt: new Date(), // Setează data și ora curentă
+      id: Date.now(), 
+      createdAt: new Date(), 
     };
 
     console.log("PostContext: Adding new post to state (with File object):", newPost);
-    // Adaugă noua postare la *începutul* listei
+    
     setPosts((prevPosts) => [newPost, ...prevPosts]);
   };
 
-  // Nu mai este nevoie de cleanup specific pentru Blob URL aici,
-  // deoarece PostItem va gestiona URL-urile pe care le creează.
-
-  // Furnizează starea și funcțiile către componentele copil
+ 
   return (
     <PostContext.Provider value={{ posts, addPost }}>
       {children}
@@ -57,7 +54,7 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Hook custom pentru a folosi contextul mai ușor
+
 export const usePostContext = (): PostContextType => {
   const context = useContext(PostContext);
   if (context === undefined) {

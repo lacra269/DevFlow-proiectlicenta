@@ -2,15 +2,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Users, Briefcase, ArrowRight, Sparkles, ArrowUp, Code, Palette, MessageSquare } from 'lucide-react'; // Adăugat ikon-uri noi
-import { TypeAnimation } from 'react-type-animation'; // Necesită instalare: npm install react-type-animation
-
-// --- Componenta AnimatedCard (Extinsă pentru diverse animații) ---
+import { Newspaper, Users, Briefcase, ArrowRight, Sparkles, ArrowUp, Code, Palette, MessageSquare } from 'lucide-react'; 
+import { TypeAnimation } from 'react-type-animation'; 
 interface AnimatedCardProps {
   children: React.ReactNode;
   className?: string;
   delay?: string;
-  animationType?: 'fade-up' | 'fade-in' | 'slide-left' | 'slide-right' | 'zoom-in'; // Tipuri de animație
+  animationType?: 'fade-up' | 'fade-in' | 'slide-left' | 'slide-right' | 'zoom-in'; 
 }
 
 const AnimatedCard: React.FC<AnimatedCardProps> = ({ children, className = '', delay = 'delay-0', animationType = 'fade-up' }) => {
@@ -31,7 +29,6 @@ const AnimatedCard: React.FC<AnimatedCardProps> = ({ children, className = '', d
     return () => { if (cardRef.current) observer.unobserve(cardRef.current); };
   }, []);
 
-  // Definirea claselor de animație bazate pe props
   const getAnimationClasses = () => {
     const baseTransition = `transition-all duration-700 ease-out ${delay}`;
     if (!isVisible) {
@@ -44,7 +41,7 @@ const AnimatedCard: React.FC<AnimatedCardProps> = ({ children, className = '', d
         default: return `${baseTransition} opacity-0 translate-y-8`;
       }
     }
-    // Clase când este vizibil
+  
     return `${baseTransition} opacity-100 translate-y-0 translate-x-0 scale-100`;
   };
 
@@ -54,9 +51,6 @@ const AnimatedCard: React.FC<AnimatedCardProps> = ({ children, className = '', d
     </div>
   );
 };
-
-
-// --- Componenta ScrollToTopButton ---
 const ScrollToTopButton: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -95,28 +89,24 @@ const ScrollToTopButton: React.FC = () => {
     </button>
   );
 };
-
-
-// --- Componenta Principală Homepage ---
 const DynamicInteractiveHomepageEnhanced: React.FC = () => {
-  // Paletă de culori extinsă
   const primaryColor = 'blue-600';
   const primaryLightBg = 'blue-50';
   const primaryHoverColor = 'blue-700';
   const primaryRingColor = 'blue-300';
-  const primaryGlowColor = 'blue-500'; // Pentru efecte hover
+  const primaryGlowColor = 'blue-500'; 
 
   const accentColor = 'pink-500';
   const accentLightBg = 'pink-50';
   const accentHoverColor = 'pink-600';
   const accentRingColor = 'pink-300';
-  const accentGlowColor = 'pink-400'; // Pentru efecte hover
+  const accentGlowColor = 'pink-400'; 
 
-  const secondaryAccentColor = 'purple-600'; // Violet/Mov
+  const secondaryAccentColor = 'purple-600';
   const secondaryAccentLightBg = 'purple-50';
   const secondaryAccentGlowColor = 'purple-500';
 
-  const tertiaryColor = 'teal-500'; // Nou: Teal/Turcoaz
+  const tertiaryColor = 'teal-500'; 
   const tertiaryLightBg = 'teal-50';
   const tertiaryHoverColor = 'teal-600';
   const tertiaryRingColor = 'teal-300';
@@ -124,12 +114,10 @@ const DynamicInteractiveHomepageEnhanced: React.FC = () => {
 
   const textColor = 'gray-900';
   const secondaryTextColor = 'gray-700';
-  const lightBgColor = 'white'; // Fundal general
+  const lightBgColor = 'white'; 
   const subtleBgGradientFrom = primaryLightBg;
   const subtleBgGradientVia = accentLightBg;
   const subtleBgGradientTo = secondaryAccentLightBg;
-
-  // Stare și efect pentru parallax (rămâne la fel)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -145,62 +133,39 @@ const DynamicInteractiveHomepageEnhanced: React.FC = () => {
     transform: `translate(${mousePosition.x * parallaxFactorSilhouette}%, ${mousePosition.y * parallaxFactorSilhouette}%)`,
     transition: 'transform 0.15s ease-out',
   };
-
-  // ***** START MODIFICARE: Imagine de fundal nouă *****
   const backgroundStyle = {
-      // Imagine nouă - Abstractă, Tehnologică
       backgroundImage: "url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')",
-      // Poți încerca și alte opțiuni:
-      // backgroundImage: "url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')", // Munți abstract
-      // backgroundImage: "url('https://images.unsplash.com/photo-1604399838231-50ae838191a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80')", // Rețea neurală / Conexiuni
-  };
-  // ***** END MODIFICARE: Imagine de fundal nouă *****
-
+       };
 
   return (
-    <main className={`bg-${lightBgColor}`}> {/* Folosim variabila lightBgColor */}
-
-      {/* ===== Hero Section ===== */}
-      <section className={`relative h-screen min-h-[800px] w-full flex items-center justify-center text-${textColor} overflow-hidden animated-gradient-background`}> {/* Gradient animat */}
-
-        {/* Fundă Decorativă (opțional, dacă dorești) */}
-         {/* <div className="corner-ribbon"><span>New!</span></div> */} {/* Am comentat-o, decomentează dacă o vrei */}
-
-        {/* Elemente Decorative Abstracte (pot fi mai multe/variate) */}
+    <main className={`bg-${lightBgColor}`}> 
+      <section className={`relative h-screen min-h-[800px] w-full flex items-center justify-center text-${textColor} overflow-hidden animated-gradient-background`}> 
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             <div className={`absolute -top-20 -left-20 w-72 h-72 bg-${primaryColor}/10 rounded-full filter blur-3xl animate-blob-slow`}></div>
             <div className={`absolute -bottom-20 -right-10 w-80 h-80 bg-${accentColor}/10 rounded-full filter blur-3xl animate-blob-slow animation-delay-2000`}></div>
             <div className={`absolute top-1/3 right-1/4 w-60 h-60 bg-${secondaryAccentColor}/5 rounded-full filter blur-2xl animate-blob-slow animation-delay-4000`}></div>
-             <div className={`absolute bottom-1/4 left-1/4 w-52 h-52 bg-${tertiaryColor}/5 rounded-full filter blur-2xl animate-blob-slow animation-delay-6000`}></div> {/* Blob nou */}
+             <div className={`absolute bottom-1/4 left-1/4 w-52 h-52 bg-${tertiaryColor}/5 rounded-full filter blur-2xl animate-blob-slow animation-delay-6000`}></div> 
         </div>
 
-        {/* ***** START MODIFICARE: Ajustare container imagine fundal ***** */}
-        {/* 1. Background Image Container (static, cu animație Ken Burns) */}
-        <div className="absolute inset-0 z-10 opacity-40"> {/* Am schimbat inset și opacity aici */}
-          <div className="absolute inset-0 bg-cover bg-center animate-kenburns-static opacity-100" style={backgroundStyle}></div> {/* Am setat opacity 100 aici, controlul e la părinte */}
+        <div className="absolute inset-0 z-10 opacity-40"> 
+          <div className="absolute inset-0 bg-cover bg-center animate-kenburns-static opacity-100" style={backgroundStyle}></div> 
         </div>
-        {/* ***** END MODIFICARE: Ajustare container imagine fundal ***** */}
-
-
-        {/* 2. Silhouette Container (cu parallax) */}
         <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none" style={silhouetteStyle}>
           <svg className="w-[85%] h-[85%] sm:w-[70%] sm:h-[70%] md:w-[60%] md:h-[60%] lg:w-[50%] lg:h-[50%] text-gray-400 opacity-25" viewBox="0 0 200 200" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" clipRule="evenodd" d="M100 5C73.49 5 52 26.49 52 53V68H45C36.716 68 30 74.716 30 83V137C30 145.284 36.716 152 45 152H60V185C60 190.523 64.477 195 70 195H130C135.523 195 140 190.523 140 185V152H155C163.284 152 170 145.284 170 137V83C170 74.716 163.284 68 155 68H148V53C148 26.49 126.51 5 100 5ZM100 25C115.464 25 128 37.536 128 53V68H72V53C72 37.536 84.536 25 100 25ZM150 88H130V132H150V88ZM70 88H50V132H70V88Z"/>
           </svg>
         </div>
 
-        {/* 3. Text Content Container (z-30) */}
         <div className="relative z-30 container mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-          {/* Titlu cu efect de scriere */}
           <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6 text-${textColor} text-shadow-light animate-fade-in-slow`}>
-              Conectează-te.&nbsp; {/* Spațiu non-breaking */}
+              Conectează-te.&nbsp; 
             <TypeAnimation
               sequence={[
                 'Creează.',
-                2000, // Păstrează 'Creează.' pentru 2s
+                2000, 
                 'Colaborează.',
-                2000, // Păstrează 'Colaborează.' pentru 2s
-                 'Inovează.', // Text nou
+                2000, 
+                 'Inovează.', 
                  2000,
               ]}
               wrapper="span"
@@ -212,7 +177,6 @@ const DynamicInteractiveHomepageEnhanced: React.FC = () => {
           <p className={`text-xl md:text-2xl text-${secondaryTextColor} max-w-4xl mx-auto mb-10 text-shadow-light-sm animate-fade-in-slow delay-200`}>
               DevFlow este ecosistemul vibrant unde pasiunea pentru cod întâlnește oportunitatea. Descoperă articole, găsește colaboratori sau lansează proiectul tău în comunitate.
           </p>
-          {/* Butoane cu efecte de hover îmbunătățite (glow) */}
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-5 sm:space-y-0 sm:space-x-6 mb-16 animate-fade-in-slow delay-400">
             <Link
               href="/blog"
@@ -227,42 +191,36 @@ const DynamicInteractiveHomepageEnhanced: React.FC = () => {
                <span>Găsește Freelanceri</span>
             </Link>
           </div>
-          {/* Iconițe cu animație de puls și tooltip (simplu, cu title) */}
           <div className="flex justify-center items-center space-x-10 md:space-x-16 animate-fade-in-slow delay-600">
                <div title="Blog & Articole Tehnice" className="icon-feature-group flex flex-col items-center text-center group cursor-pointer transform transition-transform hover:-translate-y-1.5">
                    <Newspaper className={`w-10 h-10 text-${secondaryTextColor} group-hover:text-${primaryColor} transition-colors duration-300 mb-2 group-hover:animate-pulse-fast`}/>
                  <span className={`text-sm font-medium text-${secondaryTextColor} group-hover:text-${textColor} transition-colors duration-300`}>Blog</span>
                </div>
                 <div title="Freelanceri Experți IT" className="icon-feature-group flex flex-col items-center text-center group cursor-pointer transform transition-transform hover:-translate-y-1.5">
-                    <Users className={`w-10 h-10 text-${secondaryTextColor} group-hover:text-${accentColor} transition-colors duration-300 mb-2 group-hover:animate-pulse-fast`}/> {/* Culoare accent */}
+                    <Users className={`w-10 h-10 text-${secondaryTextColor} group-hover:text-${accentColor} transition-colors duration-300 mb-2 group-hover:animate-pulse-fast`}/> 
                   <span className={`text-sm font-medium text-${secondaryTextColor} group-hover:text-${textColor} transition-colors duration-300`}>Freelanceri</span>
                 </div>
                  <div title="Proiecte & Colaborări" className="icon-feature-group flex flex-col items-center text-center group cursor-pointer transform transition-transform hover:-translate-y-1.5">
-                    <Briefcase className={`w-10 h-10 text-${secondaryTextColor} group-hover:text-${tertiaryColor} transition-colors duration-300 mb-2 group-hover:animate-pulse-fast`}/> {/* Culoare terțiară */}
+                    <Briefcase className={`w-10 h-10 text-${secondaryTextColor} group-hover:text-${tertiaryColor} transition-colors duration-300 mb-2 group-hover:animate-pulse-fast`}/> 
                   <span className={`text-sm font-medium text-${secondaryTextColor} group-hover:text-${textColor} transition-colors duration-300`}>Proiecte</span>
                 </div>
           </div>
         </div>
       </section>
 
-       {/* Separator Stilizat 1 (gradient mai complex) */}
+
        <div className="relative h-24 -mt-12 z-30">
          <div className={`absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-${subtleBgGradientFrom} via-${subtleBgGradientVia}/30 to-transparent`}></div>
-         {/* SVG Shape Divider Example (Optional) */}
-         {/* <svg className="absolute bottom-0 left-0 w-full h-16 text-blue-50 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"> <polygon points="0,100 100,0 100,100"/> </svg> */}
        </div>
-
-
-      {/* ===== Features Section ===== */}
       <section id="features" className={`py-20 md:py-28 bg-gradient-to-b from-${subtleBgGradientFrom} to-${lightBgColor} relative`}>
-         <div className={`absolute top-0 right-0 translate-x-1/3 -translate-y-1/2 w-96 h-96 bg-gradient-to-bl from-${accentColor}/10 to-transparent rounded-full filter blur-3xl opacity-60`}></div> {/* Formă decorativă nouă */}
+         <div className={`absolute top-0 right-0 translate-x-1/3 -translate-y-1/2 w-96 h-96 bg-gradient-to-bl from-${accentColor}/10 to-transparent rounded-full filter blur-3xl opacity-60`}></div> 
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <AnimatedCard animationType="fade-in" className="text-center mb-16">
                 <h2 className={`text-4xl font-bold text-${textColor} mb-4 inline-flex items-center gap-3`}>Platforma ta Completă</h2>
                 <p className={`text-lg text-${secondaryTextColor} max-w-3xl mx-auto`}>De la inspirație la implementare și colaborare, DevFlow îți oferă uneltele și comunitatea de care ai nevoie pentru a excela.</p>
             </AnimatedCard>
-             {/* Carduri Features cu Tilt Effect */}
+        
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
                   {/* Card 1 */}
                 <AnimatedCard delay="delay-100" animationType='slide-right' className="tilt-card feature-interactive-card bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 flex flex-col items-center text-center hover:border-blue-200">
@@ -272,14 +230,14 @@ const DynamicInteractiveHomepageEnhanced: React.FC = () => {
                     <Link href="/blog" className={`mt-auto text-base font-semibold text-${primaryColor} hover:text-${primaryHoverColor} transition-colors group inline-flex items-center animated-link-underline`}>Citește Articole <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform"/></Link>
                 </AnimatedCard>
                   {/* Card 2 */}
-                <AnimatedCard delay="delay-200" animationType='fade-up' className="tilt-card feature-interactive-card bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 flex flex-col items-center text-center hover:border-pink-200"> {/* Accent color border */}
+                <AnimatedCard delay="delay-200" animationType='fade-up' className="tilt-card feature-interactive-card bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 flex flex-col items-center text-center hover:border-pink-200"> 
                     <div className={`feature-icon-wrapper flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-${accentLightBg} to-pink-100 text-${accentColor} mb-5 ring-8 ring-pink-100/50 transition-all duration-300`}> <Users size={32} /> </div>
                     <h3 className={`text-2xl font-semibold text-${textColor} mb-3`}>Găsește Experți</h3>
                     <p className={`text-${secondaryTextColor} text-base mb-5`}>Cauți un freelancer talentat pentru proiectul tău? Explorează profile detaliate, vezi portofolii și contactează direct specialiști IT.</p>
                     <Link href="/freelancers" className={`mt-auto text-base font-semibold text-${accentColor} hover:text-${accentHoverColor} transition-colors group inline-flex items-center animated-link-underline`}>Caută Specialiști <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform"/></Link>
                 </AnimatedCard>
                   {/* Card 3 */}
-                <AnimatedCard delay="delay-300" animationType='slide-left' className="tilt-card feature-interactive-card bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 flex flex-col items-center text-center hover:border-teal-200"> {/* Tertiary color border */}
+                <AnimatedCard delay="delay-300" animationType='slide-left' className="tilt-card feature-interactive-card bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 flex flex-col items-center text-center hover:border-teal-200"> 
                      <div className={`feature-icon-wrapper flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-${tertiaryLightBg} to-teal-100 text-${tertiaryColor} mb-5 ring-8 ring-teal-100/50 transition-all duration-300`}> <Briefcase size={32} /> </div>
                     <h3 className={`text-2xl font-semibold text-${textColor} mb-3`}>Proiecte & Joburi</h3>
                     <p className={`text-${secondaryTextColor} text-base mb-5`}>Postează cerințele proiectului tău, găsește joburi full-time sau part-time, sau descoperă oportunități open-source.</p>
@@ -291,14 +249,14 @@ const DynamicInteractiveHomepageEnhanced: React.FC = () => {
 
 
        {/* ===== Recent Blog Posts Section ===== */}
-       <section id="blog-section" className={`py-20 md:py-28 bg-${lightBgColor}`}> {/* Folosit lightBgColor */}
+       <section id="blog-section" className={`py-20 md:py-28 bg-${lightBgColor}`}> 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                  <AnimatedCard animationType="fade-up" className="text-center mb-16">
                      <h2 className={`text-4xl font-bold text-${textColor} mb-4`}>Noutăți din Lumea DevFlow</h2>
                      <p className={`text-lg text-${secondaryTextColor} max-w-2xl mx-auto`}>Cele mai recente articole, sfaturi, perspective și tendințe din comunitatea noastră activă.</p>
                  </AnimatedCard>
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-                      {/* Carduri Blog cu Tilt Effect */}
+                   
                    <AnimatedCard delay="delay-100" animationType='zoom-in' className="tilt-card blog-card bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2">
                          <div className="overflow-hidden h-56 relative">
                              <img src="https://images.unsplash.com/photo-1605379399642-870262d3d051?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1506&q=80" alt="Imagine articol blog 1" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"/>
@@ -351,7 +309,7 @@ const DynamicInteractiveHomepageEnhanced: React.FC = () => {
        </section>
 
         {/* ===== Featured Freelancers Section (NEW) ===== */}
-        <section id="featured-freelancers" className={`py-20 md:py-28 bg-gradient-to-b from-${lightBgColor} to-${tertiaryLightBg}/30`}> {/* Gradient subtil nou */}
+        <section id="featured-freelancers" className={`py-20 md:py-28 bg-gradient-to-b from-${lightBgColor} to-${tertiaryLightBg}/30`}> 
              <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                   <AnimatedCard animationType="fade-up" className="text-center mb-16">
                       <h2 className={`text-4xl font-bold text-${textColor} mb-4 inline-flex items-center gap-3`}><Users className={`text-${accentColor} w-8 h-8`} /> Freelanceri Recomandați</h2>
@@ -416,14 +374,14 @@ const DynamicInteractiveHomepageEnhanced: React.FC = () => {
              </div>
         </section>
 
-       {/* Separator Stilizat 2 */}
+       
        <div className="relative h-20">
             <div className={`absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-${accentLightBg}/50 to-transparent`}></div>
        </div>
 
       {/* ===== Call to Action Section ===== */}
       <section id="cta" className={`py-20 md:py-32 bg-gradient-to-br from-${accentLightBg} via-${secondaryAccentLightBg}/70 to-white relative overflow-hidden`}>
-        {/* Forme decorative */}
+        
         <div className={`absolute -bottom-1/4 -left-10 w-80 h-80 bg-gradient-to-tr from-${accentColor}/20 to-transparent rounded-full filter blur-3xl animate-blob-slow animation-delay-1000`}></div>
         <div className={`absolute -top-1/4 -right-10 w-72 h-72 bg-gradient-to-bl from-${primaryColor}/15 to-transparent rounded-full filter blur-3xl animate-blob-slow animation-delay-3000`}></div>
          <div className={`absolute bottom-10 right-1/3 w-60 h-60 bg-gradient-to-tl from-${tertiaryColor}/10 to-transparent rounded-full filter blur-2xl animate-blob-slow animation-delay-5000`}></div>
@@ -433,42 +391,35 @@ const DynamicInteractiveHomepageEnhanced: React.FC = () => {
               <h2 className={`text-4xl md:text-5xl font-bold text-${textColor} mb-5 text-shadow`}>Ești Gata să Faci Parte din Revoluție?</h2>
               <p className={`text-lg md:text-xl text-${secondaryTextColor} max-w-3xl mx-auto mb-10`}>Creează-ți cont gratuit acum și deblochează întregul potențial DevFlow. Postează proiecte, conectează-te cu experți, învață și colaborează!</p>
 
-              {/* ***** START MODIFICARE: Buton CTA actualizat ***** */}
     <Link
   href="/login"
-  // --- Clase Tailwind actualizate cu ROZ ---
+
   className={
-    "animated-button px-6 py-4 text-lg font-semibold " + // Clase de bază
-    "bg-pink-600 text-white rounded-lg " + // Culoare fundal ROZ și text alb
-    "hover:bg-pink-700 transition-all duration-300 transform hover:scale-[1.05] " + // Efecte hover ROZ
-    "shadow-xl hover:shadow-lg hover:shadow-pink-500/50 " + // Umbră ROZ
-    "focus:outline-none focus:ring-4 focus:ring-pink-300 focus:ring-opacity-50 " + // Focus ring ROZ
-    "inline-flex items-center group relative overflow-hidden" // Layout și grup
+    "animated-button px-6 py-4 text-lg font-semibold " + 
+    "bg-pink-600 text-white rounded-lg " + 
+    "hover:bg-pink-700 transition-all duration-300 transform hover:scale-[1.05] " + 
+    "shadow-xl hover:shadow-lg hover:shadow-pink-500/50 " + 
+    "focus:outline-none focus:ring-4 focus:ring-pink-300 focus:ring-opacity-50 " + 
+    "inline-flex items-center group relative overflow-hidden" 
   }
-  // --- Sfârșit Clase Tailwind actualizate ---
+
 >
-  {/* Span pentru efectul de overlay la hover (opțional) */}
+ 
   <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-lg z-0"></span>
 
-  {/* Textul și iconița */}
   <span className="relative z-10 flex items-center whitespace-nowrap">
     Alătură-te Comunității Acum!
     <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform duration-300 inline-block" />
   </span>
 
-  {/* Span pentru border animat (opțional) */}
   <span className="absolute top-0 left-0 w-full h-full border-2 border-transparent group-hover:border-white/30 rounded-lg transition-all duration-300 scale-110 group-hover:scale-100 opacity-0 group-hover:opacity-100 z-0"></span>
 </Link>
 
           </AnimatedCard>
         </div>
       </section>
-
-      {/* ===== Footer ===== */}
-       {/* ===== Footer ===== */}
-        {/* Footer-ul va fi acum full-width, cu padding intern */}
         <footer className={`bg-gray-50 border-t border-gray-200 text-${secondaryTextColor}`}>
-          <div className="w-full px-4 sm:px-6 lg:px-8 py-12"> {/* Am eliminat container și mx-auto */}
+          <div className="w-full px-4 sm:px-6 lg:px-8 py-12"> 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               <div>
                 <Link href="/" className={`text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 px-1 hover:opacity-90 transition-opacity mb-2 inline-block`}>
@@ -657,13 +608,7 @@ const DynamicInteractiveHomepageEnhanced: React.FC = () => {
 
       `}</style>
 
-        {/* NOU: Script pentru efectul Tilt (adăugat la sfârșitul componentei) */}
-        {/* IMPORTANT: Acest script funcționează prin manipularea DOM directă.
-            Într-o aplicație React pură, ar fi ideal să transformăm acest script
-            într-o componentă React separată (ex: <TiltWrapper>) care folosește
-            useRef și useEffect pentru a atașa și curăța event listenerii,
-            evitând dangerouslySetInnerHTML. Totuși, pentru a menține structura
-            solicitării inițiale, l-am lăsat așa. */}
+      
         <script
           dangerouslySetInnerHTML={{
             __html: `
