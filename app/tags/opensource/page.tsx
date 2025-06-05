@@ -133,7 +133,7 @@ const getFilterLabel = (filter: FilterType): string => {
     case 'articol': return 'Articole';
     case 'discutie': return 'Discuții';
     case 'intrebare': return 'Întrebări';
-    default: return filter.charAt(0).toUpperCase() + filter.slice(1);
+    default: return String(filter).charAt(0).toUpperCase() + String(filter).slice(1);
   }
 };
 

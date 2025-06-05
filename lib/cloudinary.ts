@@ -1,4 +1,4 @@
-    import { v2 as cloudinary } from 'cloudinary';
+    import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
     import { Readable } from 'stream';
 
     // Configurează Cloudinary folosind variabilele de mediu
@@ -32,7 +32,7 @@
     export const uploadToCloudinary = (
         fileBuffer: Buffer,
         options?: object
-    ): Promise<cloudinary.UploadApiResponse> => {
+    ): Promise<UploadApiResponse> => {
         return new Promise((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream(
                 options || {}, // Poți pasa opțiuni aici (ex: folder)

@@ -5,7 +5,21 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 // Asigură-te că tipul include author: { name, image, email } și githubLink
-import { ApiPostType } from './ProfilePage'; // Sau './types' sau de unde vine tipul corect
+// Update the path below to where ApiPostType is actually defined, e.g. './types'
+// Define ApiPostType locally if './types' does not exist
+export interface ApiPostType {
+  id: string | number;
+  title?: string;
+  description?: string;
+  createdAt: string;
+  fileUrl?: string;
+  githubLink?: string;
+  author?: {
+    name?: string;
+    image?: string;
+    email?: string;
+  };
+}
 // Importăm iconițele necesare
 import { Bookmark, Mail, Github } from 'lucide-react';
 

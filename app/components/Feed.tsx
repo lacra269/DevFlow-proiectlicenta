@@ -5,7 +5,24 @@ import React from 'react';
 import useSWR from 'swr';
 // Folosim tipul original ApiPostType (presupunând că nu îl modificăm acum)
 // Asigură-te că această cale este corectă
-import { ApiPostType } from './ProfilePage';
+// Define ApiPostType here if './ProfilePage' does not exist
+export type ApiPostType = {
+    id: string;
+    description: string;
+    fileUrl?: string;
+    githubLink?: string;
+    createdAt: string;
+    updatedAt: string;
+    likeCount: number;
+    shareCount: number;
+    title: string;
+    author: {
+        id: string;
+        name: string;
+        image?: string;
+        email?: string;
+    };
+};
 
 // Importăm componenta PostItem (care AFIȘEAZĂ ÎNCĂ STILUL VECHI)
 import PostItem from './PostItem';
@@ -31,10 +48,10 @@ const fetcher = async (url: string): Promise<ApiPostType[]> => {
 // Va trebui să actualizezi fie aceste date, fie sursa ta API (ex: /api/posts)
 const genericPostsData: Omit<ApiPostType, 'likeCount' | 'shareCount' | 'updatedAt' | 'title' | 'author'>[] = [
      { id: 'generic-1', description: '🚀 Lansat un nou proiect open-source...', fileUrl: 'https://images.pexels.com/photos/907489/pexels-photo-907489.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', githubLink: 'https://github.com/', createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
-     { id: 'generic-2', description: 'Tocmai am terminat un tutorial despre WebSockets...', fileUrl: 'https://images.pexels.com/photos/17279853/pexels-photo-17279853/free-photo-of-laptop-tehnologie-design-aspect.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', githubLink: null, createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-     { id: 'generic-3', description: 'Explorând posibilitățile oferite de Cloudinary...', fileUrl: 'https://images.pexels.com/photos/28666523/pexels-photo-28666523/free-photo-of-intindere-plata-a-smartphone-ului-cu-accesorii-vibrante-pe-birou.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load', githubLink: null, createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
+     { id: 'generic-2', description: 'Tocmai am terminat un tutorial despre WebSockets...', fileUrl: 'https://images.pexels.com/photos/17279853/pexels-photo-17279853/free-photo-of-laptop-tehnologie-design-aspect.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
+     { id: 'generic-3', description: 'Explorând posibilitățile oferite de Cloudinary...', fileUrl: 'https://images.pexels.com/photos/28666523/pexels-photo-28666523/free-photo-of-intindere-plata-a-smartphone-ului-cu-accesorii-vibrante-pe-birou.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load', createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
      { id: 'generic-4', description: 'Am creat o animație CSS complexă...', fileUrl: 'https://images.pexels.com/photos/270348/pexels-photo-270348.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load', githubLink: 'https://github.com/', createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
-     { id: 'generic-5', description: 'Participând la un challenge #100DaysOfCode...', fileUrl: 'https://images.pexels.com/photos/3184295/pexels-photo-3184295.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load', githubLink: null, createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
+     { id: 'generic-5', description: 'Participând la un challenge #100DaysOfCode...', fileUrl: 'https://images.pexels.com/photos/3184295/pexels-photo-3184295.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load', createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
 ];
 // Completăm postările generice originale
 const genericPosts: ApiPostType[] = genericPostsData.map((p, index) => ({

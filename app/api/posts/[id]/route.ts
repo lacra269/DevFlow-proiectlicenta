@@ -49,10 +49,10 @@ export async function PUT(
 
     // 1. Verifică Autentificarea și obține ID-ul utilizatorului
     const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
+    if (!session?.user || !(session.user as { id?: string }).id) {
         return NextResponse.json({ message: "Neautorizat" }, { status: 401 });
     }
-    const userId = session.user.id;
+    const userId = (session.user as { id: string }).id;
 
     try {
         // Verifică dacă postarea există
@@ -164,10 +164,10 @@ export async function DELETE(
 
     // 1. Verifică Autentificarea și obține ID-ul utilizatorului
     const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
+    if (!(session?.user && (session.user as { id?: string }).id)) {
         return NextResponse.json({ message: "Neautorizat" }, { status: 401 });
     }
-    const userId = session.user.id;
+    const userId = (session.user as { id: string }).id;
 
     try {
         // Verifică dacă postarea există și aparține utilizatorului

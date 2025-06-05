@@ -5,6 +5,24 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 // Nu mai e nevoie de useState sau iconițe Play pentru această abordare
 
+type VideoItem = 
+  | {
+      id: number;
+      type: "youtube";
+      title: string;
+      description: string;
+      youtubeId: string;
+      startTime?: number;
+    }
+  | {
+      id: number;
+      type: "card";
+      title: string;
+      description: string;
+      thumbnail: string;
+      link: string;
+    };
+
 const videos: VideoItem[] = [
   {
     id: 1,

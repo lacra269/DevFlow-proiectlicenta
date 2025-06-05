@@ -19,7 +19,8 @@ export default function SettingsPage() {
     avatarUrl: "/image/githubprofil.png", 
     bio: "Dezvoltator pasionat explorând noi tehnologii.", // Tradus
     // --- Developer ---
-    
+    experientă: "", // Adăugat pentru a evita eroarea
+
     skills: "React, Next.js, TypeScript, Node.js", // Păstrat (exemple tehnice)
     currentlyHackingOn: "Construiesc funcționalități DEVFLOW!", // Tradus
     availableFor: "Colaborare, Mentorat", // Tradus

@@ -16,7 +16,7 @@ const MainAppLayout = () => {
         {/* Meniul din stânga */}
         <div className="hidden lg:block w-full lg:w-[20%] xl:w-[20%]">
           {/* Poți schimba 'type' dacă e relevant pentru contextul '/app' */}
-          <LeftMenu type="app" />
+          <LeftMenu type="home" />
         </div>
 
         {/* Conținutul principal (Feed-ul) */}
